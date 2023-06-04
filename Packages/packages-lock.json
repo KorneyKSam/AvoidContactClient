@@ -90,6 +90,13 @@
       },
       "url": "https://packages.unity.com"
     },
+    "net.tomweiland.riptide": {
+      "version": "https://github.com/RiptideNetworking/Riptide.git?path=/Packages/Core#unity-package",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "f073561d7a2f6d6b22a25294763fe449ccaa220f"
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,
