@@ -7,13 +7,17 @@ using UnityEngine.UI;
 
 namespace SceneLoading
 {
-    public class LoadingScreen : MonoBehaviour
+    public class UILoadingScreen : MonoBehaviour
     {
-        public event Action OnProgressComplete;
+        public bool IsProgressComplete => m_ProgressBar.fillAmount == m_FullProgress;
+        public float FullProgress => m_FullProgress;
 
-        private const float FullProgress = 1f;
+        public event Action OnProgressComplete;
+        public event Action OnButtonPressed;
+
         private const float LerpDuration = 1.5f;
         private const float FadeDuration = 0.5f;
+
 
         [SerializeField]
         private CanvasGroup m_LoadingScreenCanvas;
@@ -24,31 +28,48 @@ namespace SceneLoading
         [SerializeField]
         private TMP_Text m_PressButtonToContinueText;
 
-        private Coroutine m_Coroutine;
+        private Coroutine m_SmoothProgressCoroutine;
+        private Coroutine m_ResumeCoroutine;
+        private float m_FullProgress = 1f;
         private float m_TargetProgress;
         private float m_TimeElapsed;
 
-        public void SetActive(bool isActive)
+        public void SetActive(bool isActive, bool useFadeDuration = true)
         {
             if (isActive)
             {
                 m_LoadingScreenCanvas.DOFade(0f, 0f);
-                m_LoadingScreenCanvas.DOFade(1f, FadeDuration);
+                SetScreenCanvasActive(true);
+                m_LoadingScreenCanvas.DOFade(1f, useFadeDuration ? FadeDuration : 0f);
             }
             else
             {
-                m_LoadingScreenCanvas.DOFade(0f, FadeDuration);
+                m_LoadingScreenCanvas.DOFade(0f, useFadeDuration ? FadeDuration : 0f)
+                                     .OnComplete(() => SetScreenCanvasActive(false));
             }
-
         }
 
         public void ResetProgress()
         {
             m_ProgressBar.fillAmount = 0f;
-            if (m_Coroutine != null)
+            if (m_SmoothProgressCoroutine != null)
             {
-                StopCoroutine(m_Coroutine);
-                m_Coroutine = null;
+                StopCoroutine(m_SmoothProgressCoroutine);
+                m_SmoothProgressCoroutine = null;
+            }
+        }
+
+        public void AllowToClickResumeButton(bool isAllowed)
+        {
+            m_PressButtonToContinueText.gameObject.SetActive(isAllowed);
+            if (isAllowed && m_ResumeCoroutine == null)
+            {
+                m_ResumeCoroutine = StartCoroutine(TrackEnterPressed());
+            }
+            else if (!isAllowed && m_ResumeCoroutine != null)
+            {
+                StopCoroutine(m_ResumeCoroutine);
+                m_ResumeCoroutine = null;
             }
         }
 
@@ -58,11 +79,11 @@ namespace SceneLoading
         /// <param name="progress">Set parameter from 0f to 1f</param>
         public void SetLoadingProgress(float progress)
         {
-            m_TargetProgress = progress >= FullProgress ? FullProgress : progress;
+            m_TargetProgress = progress >= m_FullProgress ? m_FullProgress : progress;
 
-            if (m_Coroutine == null)
+            if (m_SmoothProgressCoroutine == null)
             {
-                m_Coroutine = StartCoroutine(SetProgressSmoothly());
+                m_SmoothProgressCoroutine = StartCoroutine(SetProgressSmoothly());
             }
         }
 
@@ -80,13 +101,12 @@ namespace SceneLoading
 
             m_ProgressBar.fillAmount = m_TargetProgress;
 
-            if (m_ProgressBar.fillAmount == FullProgress)
+            if (IsProgressComplete)
             {
-                m_PressButtonToContinueText.gameObject.SetActive(true);
-                StartCoroutine(TrackEnterPressed());
+                OnProgressComplete?.Invoke();
             }
 
-            m_Coroutine = null;
+            m_SmoothProgressCoroutine = null;
         }
 
         private IEnumerator TrackEnterPressed()
@@ -95,7 +115,7 @@ namespace SceneLoading
             {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    SetProgressComplete();
+                    SetButtonPressed();
                     yield break;
                 }
 
@@ -103,10 +123,16 @@ namespace SceneLoading
             }
         }
 
-        private void SetProgressComplete()
+        private void SetButtonPressed()
         {
+            m_ResumeCoroutine = null;
             m_PressButtonToContinueText.gameObject.SetActive(false);
-            OnProgressComplete?.Invoke();
+            OnButtonPressed?.Invoke();
+        }
+
+        private void SetScreenCanvasActive(bool isActive)
+        {
+            m_LoadingScreenCanvas.gameObject.SetActive(isActive);
         }
     }
 }
