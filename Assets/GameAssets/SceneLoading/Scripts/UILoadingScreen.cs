@@ -9,15 +9,14 @@ namespace SceneLoading
 {
     public class UILoadingScreen : MonoBehaviour
     {
-        public bool IsProgressComplete => m_ProgressBar.fillAmount == m_FullProgress;
-        public float FullProgress => m_FullProgress;
-
         public event Action OnProgressComplete;
         public event Action OnButtonPressed;
 
+        public bool IsProgressComplete => m_ProgressBar.fillAmount == m_FullProgress;
+        public float FullProgress => m_FullProgress;
+
         private const float LerpDuration = 1.5f;
         private const float FadeDuration = 0.5f;
-
 
         [SerializeField]
         private CanvasGroup m_LoadingScreenCanvas;

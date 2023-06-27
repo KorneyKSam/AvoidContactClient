@@ -11,12 +11,12 @@ namespace SceneLoading
         private int m_Milliseconds;
         private int m_CurrentMilliseconds;
 
-        public void ShowFakeLoadAnimation(int milliseconds, bool allowActivation = true)
+        public void ShowFakeLoadAnimation(int milliseconds, bool allowActivation = true, bool useResumeButton = true)
         {
             m_CurrentMilliseconds = 0;
             m_Milliseconds = milliseconds;
             IsActivationAllowed = allowActivation;
-            LoadAsync();
+            LoadAsync(useResumeButton);
         }
 
         public void AllowActivation(bool isAllowed)
@@ -24,14 +24,14 @@ namespace SceneLoading
             IsActivationAllowed = isAllowed;
         }
 
-        protected override void AllowActivation()
+        protected override void FinishLoading()
         {
             LoadingScreen.SetActive(false);
         }
 
-        private async void LoadAsync()
+        private async void LoadAsync(bool useResumeButton)
         {
-            ActivateLoadingScreen();
+            ActivateLoadingScreen(useResumeButton);
 
             while (m_CurrentMilliseconds <= m_Milliseconds)
             {

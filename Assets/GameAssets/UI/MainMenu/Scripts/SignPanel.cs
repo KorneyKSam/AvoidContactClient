@@ -1,18 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class SignPanel : MonoBehaviour
+namespace Networking
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	public class SignUpPresenter
+	{
+		private SignUpModel m_SignUpModel;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+		public SignUpPresenter(SignUpModel signUpModel)
+		{
+			m_SignUpModel = signUpModel;
+		}
+	} 
 }

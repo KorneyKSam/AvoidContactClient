@@ -1,3 +1,4 @@
+using Common;
 using Networking;
 using SceneLoading;
 using UnityEngine;
@@ -11,18 +12,20 @@ public class GlobalInstaller : MonoInstaller
     [SerializeField]
     private NetworkService m_NetworkService;
 
+    [SerializeField]
+    private CameraController m_CameraController;
+
     public override void InstallBindings()
     {
         BindSceneLoading();
-
         BindNetworking();
+        BindCameraController();
     }
 
     private void BindSceneLoading()
     {
-        var loadingScreenInstance = Container.InstantiatePrefabForComponent<UILoadingScreen>(m_LoadingScreen, Vector2.zero, Quaternion.identity, null);
-        Container.Bind<UILoadingScreen>().FromInstance(loadingScreenInstance).AsSingle();
-        loadingScreenInstance.SetActive(false, useFadeDuration: false);
+        var loadingScreenInstance = InstantiateWithDefaultValues(m_LoadingScreen);
+        Container.Bind<UILoadingScreen>().FromInstance(loadingScreenInstance).AsCached();
         Container.QueueForInject(loadingScreenInstance);
         Container.Bind<SceneLoader>().FromNew().AsSingle();
         Container.Bind<FakeLoader>().FromNew().AsSingle();
@@ -32,6 +35,17 @@ public class GlobalInstaller : MonoInstaller
     {
         Container.Bind<ISignServerCommandsExecutor>().To<SignServerCommandExecutor>().FromNew().AsSingle();
         var networkService = Container.InstantiatePrefabForComponent<NetworkService>(m_NetworkService, Vector2.zero, Quaternion.identity, null);
-        Container.Bind<NetworkService>().FromInstance(networkService).AsSingle();
+        Container.Bind(typeof(NetworkService), typeof(IInitializable)).FromInstance(networkService).AsSingle();
+    }
+
+    private void BindCameraController()
+    {
+        var cameraController = InstantiateWithDefaultValues(m_CameraController);
+        Container.Bind<CameraController>().FromInstance(cameraController);
+    }
+
+    private T InstantiateWithDefaultValues<T>(T prefab) where T : MonoBehaviour
+    {
+        return Container.InstantiatePrefabForComponent<T>(prefab, Vector2.zero, Quaternion.identity, null);
     }
 }

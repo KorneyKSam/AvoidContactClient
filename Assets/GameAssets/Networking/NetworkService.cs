@@ -6,8 +6,10 @@ using Zenject;
 
 namespace Networking
 {
-    public class NetworkService : MonoBehaviour
+    public class NetworkService : MonoBehaviour, IInitializable
     {
+        public event Action<bool> OnConnectionResult;
+
         public bool IsConnected => m_Client.IsConnected;
 
         [Inject]
@@ -15,16 +17,14 @@ namespace Networking
 
         private Client m_Client;
         private MessageSender m_MessageSender;
-        private bool m_Initialized;
 
-        public void Init()
+        public void Initialize()
         {
             RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
             m_Client = new Client();
             AddHandlersForClient(m_Client);
             m_MessageSender = new MessageSender(m_Client);
             MessageReceiver.SetServerCommandsExecutor(m_ServerCommandsExecutor);
-            m_Initialized = true;
         }
 
         public void Connect(string ip, ushort port)
@@ -42,12 +42,12 @@ namespace Networking
 
         private void ConnectionHandler(object sender, EventArgs e)
         {
-
+            OnConnectionResult?.Invoke(true);
         }
 
         private void ConnectionFailedHandler(object sender, ConnectionFailedEventArgs e)
         {
-
+            OnConnectionResult?.Invoke(false);
         }
 
         private void DisconnectedHandler(object sender, DisconnectedEventArgs e)
@@ -58,14 +58,6 @@ namespace Networking
         private void ClientDisconnectedHandler(object sender, ClientDisconnectedEventArgs e)
         {
 
-        }
-
-        private void Awake()
-        {
-            if (!m_Initialized)
-            {
-                Init();
-            }
         }
 
         private void FixedUpdate()

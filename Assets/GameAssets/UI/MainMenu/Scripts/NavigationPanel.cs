@@ -1,4 +1,7 @@
+using Common;
 using DG.Tweening;
+using Networking;
+using Networking.ViewModels;
 using UnityEngine;
 
 namespace UI
@@ -7,12 +10,13 @@ namespace UI
     {
         [Header("References")]
         [SerializeField]
-        private SignPanel m_SignPanel; 
+        private SignInView m_SignInView;
 
         [Header("Settings")]
         [SerializeField]
         private float m_Duration = 2f;
 
+        private SignInViewModel m_SignInViewModel;
         private CameraController m_CameraController;
         private Vector3 m_LeftPosition;
         private Vector3 m_MiddlePosition;
@@ -25,6 +29,10 @@ namespace UI
             m_MiddlePosition = new Vector3(m_CameraController.GetCameraScreenSize().x / 2,
                                            transform.localPosition.y,
                                            transform.localPosition.z);
+
+            var model = new SignInModel();
+            var viewModel = new SignInViewModel(model, isAuthorized: true);
+            //m_SignInView.DataContext = viewModel;
         }
 
         public void MoveToMiddle(bool isImmediately = false)
@@ -35,6 +43,11 @@ namespace UI
         public void MoveToLeft(bool isImmediately = false)
         {
             MoveToPosition(m_LeftPosition, isImmediately);
+        }
+
+        public void SetNavigationContent(NavigationPanelContent navigationPanelContent)
+        {
+
         }
 
         private void MoveToPosition(Vector3 position, bool isImmediately)

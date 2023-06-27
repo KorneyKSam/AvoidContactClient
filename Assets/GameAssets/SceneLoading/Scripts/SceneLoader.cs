@@ -8,23 +8,20 @@ namespace SceneLoading
 	{
 		private AsyncOperation m_SceneLoadingOperation;
 
-        public void LoadScene(SceneName sceneName, bool allowSceneActivation) => 
-                        LoadScene(sceneName, LoadSceneMode.Single, allowSceneActivation);
-
-        public void LoadScene(int buildIndex, LoadSceneMode loadSceneMode = LoadSceneMode.Single, bool allowSceneActivation = true)
+        public void LoadScene(int buildIndex, LoadSceneMode loadSceneMode = LoadSceneMode.Single, bool allowSceneActivation = true, bool useResumeButton = true)
         {
             var sceneName = SceneManager.GetSceneByBuildIndex(buildIndex).name;
             LoadScene(sceneName, loadSceneMode, allowSceneActivation);
 		}
 
-        public void LoadScene(SceneName sceneName, LoadSceneMode loadSceneMode = LoadSceneMode.Single, bool allowSceneActivation = true)
+        public void LoadScene(SceneName sceneName, LoadSceneMode loadSceneMode = LoadSceneMode.Single, bool allowSceneActivation = true, bool useResumeButton = true)
         {
             LoadScene(sceneName.ToString(), loadSceneMode, allowSceneActivation);
         }
 
-        public void LoadScene(string sceneName, LoadSceneMode loadSceneMode = LoadSceneMode.Single, bool allowSceneActivation = true)
+        public void LoadScene(string sceneName, LoadSceneMode loadSceneMode = LoadSceneMode.Single, bool allowSceneActivation = true, bool useResumeButton = true)
 		{
-            LoadSceneAsync(sceneName, loadSceneMode, allowSceneActivation);
+            LoadSceneAsync(sceneName, loadSceneMode, allowSceneActivation, useResumeButton);
 		}
 
 		public void AllowSceneActivation(bool isAllowed)
@@ -35,7 +32,7 @@ namespace SceneLoading
             }
 		}
 
-        protected override void AllowActivation()
+        protected override void FinishLoading()
         {
             if (m_SceneLoadingOperation != null)
             {
@@ -44,10 +41,10 @@ namespace SceneLoading
             }
         }
 
-        private async void LoadSceneAsync(string sceneName, LoadSceneMode loadSceneMode, bool allowSceneActivation)
+        private async void LoadSceneAsync(string sceneName, LoadSceneMode loadSceneMode, bool allowSceneActivation, bool useResumeButton)
 		{
             IsActivationAllowed = allowSceneActivation;
-			ActivateLoadingScreen();
+			ActivateLoadingScreen(useResumeButton);
 
             m_SceneLoadingOperation = SceneManager.LoadSceneAsync(sceneName, loadSceneMode);
             m_SceneLoadingOperation.allowSceneActivation = false;

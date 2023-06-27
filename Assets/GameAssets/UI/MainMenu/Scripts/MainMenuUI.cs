@@ -1,4 +1,6 @@
+using Common;
 using UnityEngine;
+using Zenject;
 
 namespace UI
 {
@@ -9,12 +11,17 @@ namespace UI
         [SerializeField]
         private NavigationPanel m_NavigationPanel;
 
-        [SerializeField]
+        [Inject]
         private CameraController m_CameraController;
 
-        public void Init()
+        public void Initialize()
         {
             m_NavigationPanel.Init(m_CameraController);
+        }
+
+        private void Start()
+        {
+            Initialize();
         }
     }
 }

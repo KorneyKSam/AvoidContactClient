@@ -20,21 +20,26 @@ namespace SceneLoading
         }
 
         private bool m_IsActivationAllowed;
+        private bool m_IsResumeButtonUsing;
 
-        protected void ActivateLoadingScreen()
+        protected void ActivateLoadingScreen(bool useResumeButton)
         {
+            m_IsResumeButtonUsing = useResumeButton;
             LoadingScreen.SetActive(true);
             LoadingScreen.ResetProgress();
             AddLoadingScreenListeners();
         }
 
-        protected abstract void AllowActivation();
+        protected abstract void FinishLoading();
 
         private void AddLoadingScreenListeners()
         {
             RemoveLoadingScreenListeners();
             LoadingScreen.OnProgressComplete += SetLoadingScreenFinished;
-            LoadingScreen.OnButtonPressed += OnButtonPressed;
+            if (m_IsResumeButtonUsing)
+            {
+                LoadingScreen.OnButtonPressed += OnButtonPressed;
+            }
         }
 
         private void RemoveLoadingScreenListeners()
@@ -45,7 +50,12 @@ namespace SceneLoading
 
         private void AllowResumeButton(bool isAllowed)
         {
-            LoadingScreen.AllowToClickResumeButton(isAllowed);
+            LoadingScreen.AllowToClickResumeButton(isAllowed && m_IsResumeButtonUsing);
+
+            if (isAllowed && !m_IsResumeButtonUsing)
+            {
+                OnButtonPressed();
+            }
         }
 
         private void OnButtonPressed()
@@ -53,7 +63,7 @@ namespace SceneLoading
             LoadingScreen.OnButtonPressed -= OnButtonPressed;
             LoadingScreen.ResetProgress();
             AllowResumeButton(false);
-            AllowActivation();
+            FinishLoading();
         }
 
         private void SetLoadingScreenFinished()
