@@ -1,7 +1,6 @@
 using Common;
 using DG.Tweening;
 using Networking;
-using Networking.ViewModels;
 using UnityEngine;
 
 namespace UI
@@ -31,7 +30,6 @@ namespace UI
                                            transform.localPosition.z);
 
             var model = new SignInModel();
-            var viewModel = new SignInViewModel(model, isAuthorized: true);
             //m_SignInView.DataContext = viewModel;
         }
 

@@ -1,5 +1,5 @@
+using MVVM;
 using Networking;
-using Networking.ViewModels;
 using SceneLoading;
 using UI;
 using UnityEngine;
@@ -13,6 +13,11 @@ public class GameStarter : MonoBehaviour
 
     [SerializeField]
     private ushort m_Port = 7777;
+
+    [SerializeField]
+    private SignInView m_SignInView;
+
+    private SignInViewModel m_SignInViewModel;
 
     [Header("Fake loading")]
     private int m_LoadingMilliseconds = 1000;
@@ -30,6 +35,27 @@ public class GameStarter : MonoBehaviour
     private MainMenuUI m_MainMenuUI;
 
     private void Start()
+    {
+        StartConnecting();
+        m_SignInViewModel = new SignInViewModel();
+        m_SignInView.SetVeiwModel(m_SignInViewModel);
+    }
+
+    [ContextMenu("TEST1")]
+    private void TEST1()
+    {
+        m_SignInViewModel.Login = "123";
+    }
+
+
+    [ContextMenu("TEST2")]
+    private void TEST2()
+    {
+        m_SignInViewModel.Login = "321";
+    }
+
+
+    private void StartConnecting()
     {
         if (!m_NetworkSerivce.IsConnected)
         {

@@ -36,7 +36,6 @@ namespace SceneLoading
             while (m_CurrentMilliseconds <= m_Milliseconds)
             {
                 float percentComplete = (float)Math.Round((double)(FullPercentage * m_CurrentMilliseconds) / m_Milliseconds);
-                Debug.Log(percentComplete);
                 float value = (percentComplete / FullPercentage) * LoadingScreen.FullProgress;
                 LoadingScreen.SetLoadingProgress(value);
                 await Task.Delay(LoadingDelay);
