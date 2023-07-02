@@ -1,3 +1,4 @@
+using Common.Data;
 using Networking;
 using SceneLoading;
 using UI;
@@ -32,7 +33,7 @@ public class GameStarter : MonoBehaviour
     private MainMenuUI m_MainMenuUI;
 
     [Inject]
-    private DataSerializator m_DataSerializator;
+    private DataService m_DataService;
 
     private void Start()
     {
@@ -66,15 +67,19 @@ public class GameStarter : MonoBehaviour
     private void OnConnectionResult(bool isConnected)
     {
         m_FakeLoader.AllowActivation(true);
+        var userData = m_DataService.Load<UserData>();
+        var signInModel = m_DataService.Load<SignInModel>();
+        m_DataService.Save(signInModel);
 
         if (isConnected)
         {
+
             m_MainMenuUI.NavigationPanel.MoveToMiddle();
             m_MainMenuUI.NavigationPanel.SetNavigationContent(NavigationPanelContent.Authorization);
         }
 
-        
-        
+
+
 
 
 

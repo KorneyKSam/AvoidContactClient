@@ -1,3 +1,4 @@
+using Common.Data;
 using System;
 
 namespace Networking
@@ -7,5 +8,11 @@ namespace Networking
     {
         public string Login { get; set; }
         public string Password { get; set; }
+
+        public SignInModel()
+        {
+            Login = string.Empty;
+            Password = string.Empty;
+        }
     }
 }

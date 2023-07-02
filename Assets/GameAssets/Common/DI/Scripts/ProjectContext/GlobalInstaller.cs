@@ -1,4 +1,5 @@
 using Common;
+using Common.Data;
 using Networking;
 using SceneLoading;
 using UnityEngine;
@@ -20,6 +21,8 @@ public class GlobalInstaller : MonoInstaller
         BindSceneLoading();
         BindNetworking();
         BindCameraController();
+
+        Container.Bind<DataService>().FromNew().AsSingle();
     }
 
     private void BindSceneLoading()
