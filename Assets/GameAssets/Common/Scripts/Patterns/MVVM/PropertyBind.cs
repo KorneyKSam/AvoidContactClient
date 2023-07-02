@@ -1,13 +1,16 @@
 using System;
 using System.ComponentModel;
+using System.Reflection;
 using UnityEngine.Events;
 
 namespace MVVM
 {
-    public class PropertyBinder<T> : IDisposable
+    public class PropertyBind<T> : IDisposable
     {
+        public string PropertyName => m_OwnerPropertyName;
+
         private UnityEvent<T> m_ViewEvenet;
-        private UnityAction<T> m_ViewModelAction;
+        private PropertyInfo m_PropertyInfo;
         private bool m_SkipViewBinding;
 
         private UnityAction<T> m_ViewAction;
@@ -15,33 +18,41 @@ namespace MVVM
         private string m_OwnerPropertyName;
         private bool m_SkipViewModelBinding;
 
-        public PropertyBinder(INotifyPropertyChanged notifyPropertyChanged, string ownerPropertyName, UnityAction<T> viewAction)
+        public PropertyBind(INotifyPropertyChanged notifyPropertyChanged, string ownerPropertyName)
         {
             m_PropertyOwner = notifyPropertyChanged;
             m_OwnerPropertyName = ownerPropertyName;
+        }
+
+        public void SetViewBinding(UnityAction<T> viewAction)
+        {
+            m_SkipViewBinding = false;
             m_ViewAction = viewAction;
             m_PropertyOwner.PropertyChanged += PropertyChangedHandler;
         }
 
-        public void CreateReverseBinding(UnityEvent<T> viewEvent, UnityAction<T> viewModelAction)
+        public void SetViewModelBinding(UnityEvent<T> viewEvent)
         {
             m_SkipViewModelBinding = false;
             m_ViewEvenet = viewEvent;
-            m_ViewModelAction = viewModelAction;
-            m_ViewEvenet.AddListener(OnViewEvent);
+            m_PropertyInfo = m_PropertyOwner.GetType().GetProperty(m_OwnerPropertyName);
+            m_ViewEvenet.AddListener(ViewEventHandler);
+        }
+
+        public void SetTwoWayBinding(UnityAction<T> viewAction, UnityEvent<T> viewEvent)
+        {
+            SetViewBinding(viewAction);
+            SetViewModelBinding(viewEvent);
         }
 
         public void Dispose()
         {
-            if (m_ViewEvenet != null)
-            {
-                m_ViewEvenet.RemoveListener(OnViewEvent);
-            }
+            m_ViewEvenet?.RemoveListener(ViewEventHandler);
             m_PropertyOwner.PropertyChanged -= PropertyChangedHandler;
             m_PropertyOwner = null;
         }
 
-        private void OnViewEvent(T arument)
+        private void ViewEventHandler(T arument)
         {
             if (m_SkipViewModelBinding)
             {
@@ -50,7 +61,7 @@ namespace MVVM
             }
 
             m_SkipViewBinding = true;
-            m_ViewModelAction?.Invoke(arument);
+            m_PropertyInfo.SetValue(m_PropertyOwner, arument);
         }
 
         private void PropertyChangedHandler(object sender, PropertyChangedEventArgs e)

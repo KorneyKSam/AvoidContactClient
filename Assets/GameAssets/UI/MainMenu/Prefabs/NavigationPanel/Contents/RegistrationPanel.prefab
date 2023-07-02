@@ -319,7 +319,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4867565218233751837
 RectTransform:
   m_ObjectHideFlags: 0
@@ -750,7 +750,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2084588945779786267, guid: 87f38dbf92aaa244d9d66b6cf3727d38, type: 3}
       propertyPath: m_Name
-      value: ClickableButton2
+      value: Cancel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87f38dbf92aaa244d9d66b6cf3727d38, type: 3}
@@ -986,7 +986,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2084588945779786267, guid: 87f38dbf92aaa244d9d66b6cf3727d38, type: 3}
       propertyPath: m_Name
-      value: ClickableButton1
+      value: Registration
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87f38dbf92aaa244d9d66b6cf3727d38, type: 3}

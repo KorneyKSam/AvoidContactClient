@@ -1,4 +1,3 @@
-using MVVM;
 using Networking;
 using SceneLoading;
 using UI;
@@ -15,8 +14,6 @@ public class GameStarter : MonoBehaviour
     private ushort m_Port = 7777;
 
     [SerializeField]
-    private SignInView m_SignInView;
-
     private SignInViewModel m_SignInViewModel;
 
     [Header("Fake loading")]
@@ -34,11 +31,12 @@ public class GameStarter : MonoBehaviour
     [Inject]
     private MainMenuUI m_MainMenuUI;
 
+    [Inject]
+    private DataSerializator m_DataSerializator;
+
     private void Start()
     {
         StartConnecting();
-        m_SignInViewModel = new SignInViewModel();
-        m_SignInView.SetVeiwModel(m_SignInViewModel);
     }
 
     [ContextMenu("TEST1")]
@@ -68,8 +66,15 @@ public class GameStarter : MonoBehaviour
     private void OnConnectionResult(bool isConnected)
     {
         m_FakeLoader.AllowActivation(true);
-        m_MainMenuUI.NavigationPanel.MoveToMiddle();
-        m_MainMenuUI.NavigationPanel.SetNavigationContent(NavigationPanelContent.Authorization);
+
+        if (isConnected)
+        {
+            m_MainMenuUI.NavigationPanel.MoveToMiddle();
+            m_MainMenuUI.NavigationPanel.SetNavigationContent(NavigationPanelContent.Authorization);
+        }
+
+        
+        
 
 
 

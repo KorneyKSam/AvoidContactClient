@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using UnityEngine;
 
 namespace MVVM
 {
-    public abstract class BaseViewModel : INotifyPropertyChanged
+    public abstract class BaseViewModel : MonoBehaviour, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 

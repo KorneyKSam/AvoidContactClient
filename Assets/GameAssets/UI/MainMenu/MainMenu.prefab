@@ -52,7 +52,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_NavigationPanel: {fileID: 2340800987828921997}
-  m_CameraController: {fileID: 0}
 --- !u!1 &2340800987902668081
 GameObject:
   m_ObjectHideFlags: 0

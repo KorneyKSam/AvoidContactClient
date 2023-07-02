@@ -71,6 +71,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5641348410671746165}
   - component: {fileID: 5641348410671746162}
+  - component: {fileID: 6771673612793105890}
   m_Layer: 5
   m_Name: AuthorizationPanel
   m_TagString: Untagged
@@ -128,6 +129,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
+--- !u!114 &6771673612793105890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5641348410671746164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 130036383ced5964e9c87b75780306ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5641348411947744839
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,7 +538,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6980392201563208536, guid: c2c296fc535ba474fb986a51d631ddb4, type: 3}
       propertyPath: m_Name
-      value: InputField1
+      value: LoginField
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700263202464601164, guid: c2c296fc535ba474fb986a51d631ddb4, type: 3}
+      propertyPath: m_ContentType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700263202464601164, guid: c2c296fc535ba474fb986a51d631ddb4, type: 3}
+      propertyPath: m_CharacterValidation
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2c296fc535ba474fb986a51d631ddb4, type: 3}
@@ -534,6 +555,33 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6722331387842333246, guid: c2c296fc535ba474fb986a51d631ddb4, type: 3}
   m_PrefabInstance: {fileID: 5641348410550069463}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3356674604672865167 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6980392201563208536, guid: c2c296fc535ba474fb986a51d631ddb4, type: 3}
+  m_PrefabInstance: {fileID: 5641348410550069463}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8632000773217637386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3356674604672865167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1957390036, guid: 346623add6b93314fbf2b828a804b140, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewModelPropertyName: UI.SignInViewModel.Login
+  viewEventName: TMPro.TMP_InputField.onValueChanged
+  viewPropertyName: TMPro.TMP_InputField.text
+  viewAdapterTypeName: 
+  viewAdapterOptions: {fileID: 0}
+  viewModelAdapterTypeName: 
+  viewModelAdapterOptions: {fileID: 0}
+  exceptionPropertyName: 
+  exceptionAdapterTypeName: 
+  exceptionAdapterOptions: {fileID: 0}
 --- !u!1001 &5641348410763273275
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -623,7 +671,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2084588945779786267, guid: 87f38dbf92aaa244d9d66b6cf3727d38, type: 3}
       propertyPath: m_Name
-      value: ClickableButton1
+      value: Authorization
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87f38dbf92aaa244d9d66b6cf3727d38, type: 3}
@@ -729,7 +777,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2084588945779786267, guid: 87f38dbf92aaa244d9d66b6cf3727d38, type: 3}
       propertyPath: m_Name
-      value: ClickableButton4
+      value: ResetPassword
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87f38dbf92aaa244d9d66b6cf3727d38, type: 3}
@@ -835,7 +883,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2084588945779786267, guid: 87f38dbf92aaa244d9d66b6cf3727d38, type: 3}
       propertyPath: m_Name
-      value: ClickableButton3
+      value: Registration
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87f38dbf92aaa244d9d66b6cf3727d38, type: 3}
@@ -973,7 +1021,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6980392201563208536, guid: c2c296fc535ba474fb986a51d631ddb4, type: 3}
       propertyPath: m_Name
-      value: InputField2
+      value: PasswordField
       objectReference: {fileID: 0}
     - target: {fileID: 7700263202464601164, guid: c2c296fc535ba474fb986a51d631ddb4, type: 3}
       propertyPath: m_InputType
@@ -998,6 +1046,33 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6722331387842333246, guid: c2c296fc535ba474fb986a51d631ddb4, type: 3}
   m_PrefabInstance: {fileID: 5641348411614827731}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3356674605771190155 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6980392201563208536, guid: c2c296fc535ba474fb986a51d631ddb4, type: 3}
+  m_PrefabInstance: {fileID: 5641348411614827731}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2299192233638167909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3356674605771190155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1957390036, guid: 346623add6b93314fbf2b828a804b140, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewModelPropertyName: UI.SignInViewModel.Password
+  viewEventName: TMPro.TMP_InputField.onValueChanged
+  viewPropertyName: TMPro.TMP_InputField.text
+  viewAdapterTypeName: 
+  viewAdapterOptions: {fileID: 0}
+  viewModelAdapterTypeName: 
+  viewModelAdapterOptions: {fileID: 0}
+  exceptionPropertyName: 
+  exceptionAdapterTypeName: 
+  exceptionAdapterOptions: {fileID: 0}
 --- !u!1001 &5641348412632041758
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1099,7 +1174,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2084588945779786267, guid: 87f38dbf92aaa244d9d66b6cf3727d38, type: 3}
       propertyPath: m_Name
-      value: ClickableButton2
+      value: Offline
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87f38dbf92aaa244d9d66b6cf3727d38, type: 3}
@@ -1203,10 +1278,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Toggle
       objectReference: {fileID: 0}
-    - target: {fileID: 3520393317842307811, guid: 1bfd1abdd50eaca419729cff52be3ad9, type: 3}
-      propertyPath: m_TargetGraphic
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3520393318530812336, guid: 1bfd1abdd50eaca419729cff52be3ad9, type: 3}
       propertyPath: m_text
       value: "\u0412\u0445\u043E\u0434\u0438\u0442\u044C \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u0438"
@@ -1229,6 +1300,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bfd1abdd50eaca419729cff52be3ad9, type: 3}
+--- !u!1 &5641348411397591826 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3520393317842307809, guid: 1bfd1abdd50eaca419729cff52be3ad9, type: 3}
+  m_PrefabInstance: {fileID: 9120048110221335027}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2865308573361946930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5641348411397591826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1957390036, guid: 346623add6b93314fbf2b828a804b140, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewModelPropertyName: UI.SignInViewModel.IsAutomaticAuthorization
+  viewEventName: UnityEngine.UI.Toggle.onValueChanged
+  viewPropertyName: UnityEngine.UI.Toggle.isOn
+  viewAdapterTypeName: 
+  viewAdapterOptions: {fileID: 0}
+  viewModelAdapterTypeName: 
+  viewModelAdapterOptions: {fileID: 0}
+  exceptionPropertyName: 
+  exceptionAdapterTypeName: 
+  exceptionAdapterOptions: {fileID: 0}
 --- !u!224 &5641348411397591827 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3520393317842307808, guid: 1bfd1abdd50eaca419729cff52be3ad9, type: 3}

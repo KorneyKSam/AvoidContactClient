@@ -155,7 +155,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 9168748144928248253}
   toggleTransition: 1
   graphic: {fileID: 3520393317581426038}
   m_Group: {fileID: 0}
@@ -478,3 +478,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7807306487176647799, guid: 6ade420001e32dd4c94c87be3429e7a7, type: 3}
   m_PrefabInstance: {fileID: 3520393318216750826}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9168748144928248253 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5757602320318695255, guid: 6ade420001e32dd4c94c87be3429e7a7, type: 3}
+  m_PrefabInstance: {fileID: 3520393318216750826}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

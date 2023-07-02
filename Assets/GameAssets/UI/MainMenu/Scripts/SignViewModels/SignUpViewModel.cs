@@ -4,17 +4,25 @@ using UnityWeld.Binding;
 namespace UI
 {
     [Binding]
-    public class SignInViewModel : BaseViewModel
+    public class SignUpViewModel : BaseViewModel
     {
         private string m_Login;
+        private string m_Email;
         private string m_Password;
-        private bool m_IsAutomaticlAuthorization;
+        private string m_RepeatedPassword;
 
         [Binding]
         public string Login
         {
             get => m_Login;
             set => Set(ref m_Login, value);
+        }
+
+        [Binding]
+        public string Email
+        {
+            get => m_Email;
+            set => Set(ref m_Email, value);
         }
 
         [Binding]
@@ -25,10 +33,10 @@ namespace UI
         }
 
         [Binding]
-        public bool IsAutomaticAuthorization
+        public string RepeatedPassword
         {
-            get => m_IsAutomaticlAuthorization;
-            set => Set(ref m_IsAutomaticlAuthorization, value);
+            get => m_RepeatedPassword;
+            set => Set(ref m_RepeatedPassword, value);
         }
     }
 }
