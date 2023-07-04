@@ -1,12 +1,17 @@
 using Common;
 using DG.Tweening;
+using Networking;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI
 {
-    public class NavigationPanelView : MonoBehaviour
+    public class NavigationPanelConroller : MonoBehaviour
     {
+        public event Action<SignInModel> OnAuthorizationClick;
+        public SignInModel SignInModel => m_SignInViewModel.Model;
+
         [Header("Main panel buttons")]
         [SerializeField]
         private Button m_MultiplayerBtn;
@@ -67,11 +72,13 @@ namespace UI
         public void Init(CameraController cameraController)
         {
             m_CameraController = cameraController;
+
             m_LeftPosition = transform.localPosition;
 
             m_MiddlePosition = new Vector3(m_CameraController.GetCameraScreenSize().x / 2,
                                            transform.localPosition.y,
                                            transform.localPosition.z);
+            AddAuthorizationListeners();
         }
 
         public void MoveToMiddle(bool isImmediately = false)
@@ -86,7 +93,54 @@ namespace UI
 
         public void SetNavigationContent(NavigationPanelContent navigationPanelContent)
         {
+            m_SignInViewModel.gameObject.SetActive(false);
+            m_SignUpViewModel.gameObject.SetActive(false);
+            m_ManMenuPanel.SetActive(false);
 
+            switch (navigationPanelContent)
+            {
+                case NavigationPanelContent.Authorization:
+                    m_SignInViewModel.gameObject.SetActive(true);
+                    break;
+                case NavigationPanelContent.Registraction:
+                    m_SignUpViewModel.gameObject.SetActive(true);
+                    break;
+                default:
+                case NavigationPanelContent.MainContent:
+                    m_ManMenuPanel.SetActive(true);
+                    break;
+            }
+        }
+
+        public void UpdateSignInView(bool isAutomaticAuthorization, string message = "")
+        {
+            m_SignInViewModel.Message = message;
+            m_SignInViewModel.IsAutomaticAuthorization = isAutomaticAuthorization;
+        }
+
+        public void SetLogInFailed(string message)
+        {
+            m_AuthorizationBtn.interactable = true;
+            m_SignInViewModel.Message = message;
+        }
+
+        private void SendLogIn()
+        {
+            //To do validation
+            m_AuthorizationBtn.interactable = false;
+            OnAuthorizationClick?.Invoke(m_SignInViewModel.Model);
+        }
+
+
+        private void AddAuthorizationListeners()
+        {
+            RemoveAuthorizationListeners();
+            m_AuthorizationBtn.onClick.AddListener(SendLogIn);
+        }
+
+        private void RemoveAuthorizationListeners()
+        {
+            m_AuthorizationBtn.onClick.RemoveListener(SendLogIn);
         }
 
         private void MoveToPosition(Vector3 position, bool isImmediately)

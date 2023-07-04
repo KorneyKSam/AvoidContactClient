@@ -5,10 +5,14 @@ using Zenject;
 public class MainMenuSceneInstaller : MonoInstaller
 {
     [SerializeField]
-    private MainMenuUI m_MainMenuUI;
+    private MainMenuController m_MainMenuController;
+
+    [SerializeField]
+    private NavigationPanelConroller m_NavigationPanelConroller;
 
     public override void InstallBindings()
     {
-        Container.Bind<MainMenuUI>().FromInstance(m_MainMenuUI).AsSingle();
+        Container.Bind<NavigationPanelConroller>().FromInstance(m_NavigationPanelConroller).AsSingle();
+        Container.Bind<MainMenuController>().FromInstance(m_MainMenuController).AsSingle();
     }
 }

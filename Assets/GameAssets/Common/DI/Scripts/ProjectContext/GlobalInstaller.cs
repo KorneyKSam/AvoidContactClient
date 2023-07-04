@@ -22,7 +22,9 @@ public class GlobalInstaller : MonoInstaller
         BindNetworking();
         BindCameraController();
 
-        Container.Bind<DataService>().FromNew().AsSingle();
+        var dataService = new DataService();
+        Container.Bind<DataService>().FromInstance(dataService).AsSingle();
+        Container.Bind<SignInModel>().FromInstance(dataService.Load<SignInModel>()).AsSingle();
     }
 
     private void BindSceneLoading()
@@ -36,7 +38,6 @@ public class GlobalInstaller : MonoInstaller
 
     private void BindNetworking()
     {
-        Container.Bind<ISignServerCommandsExecutor>().To<SignServerCommandExecutor>().FromNew().AsSingle();
         var networkService = Container.InstantiatePrefabForComponent<NetworkService>(m_NetworkService, Vector2.zero, Quaternion.identity, null);
         Container.Bind(typeof(NetworkService), typeof(IInitializable)).FromInstance(networkService).AsSingle();
     }

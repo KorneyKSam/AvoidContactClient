@@ -7,6 +7,7 @@ namespace Common.Data
 {
     public class DataService
     {
+        private const string Format = "txt";
         private JsonSerializer m_JsonSerializer;
 
         public DataService()
@@ -16,7 +17,7 @@ namespace Common.Data
 
         public void Save<T>(T data) where T : new()
         {
-            var filePath = GetPath<T>();
+            var filePath = BuildPath<T>();
             using var streamWriter = new StreamWriter(filePath);
             streamWriter.AutoFlush = true;
             m_JsonSerializer.Serialize(streamWriter, data);
@@ -24,7 +25,7 @@ namespace Common.Data
 
         public T Load<T>() where T : new()
         {
-            var filePath = GetPath<T>();
+            var filePath = BuildPath<T>();
             T data;
             if (File.Exists(filePath))
             {
@@ -53,16 +54,16 @@ namespace Common.Data
 
         public void Remove<T>() where T : new()
         {
-            var filePath = GetPath<T>();
+            var filePath = BuildPath<T>();
             if (File.Exists(filePath))
             {
                 File.Delete(filePath);
             }
         }
 
-        private string GetPath<T>()
+        private string BuildPath<T>()
         {
-            return $"{Application.persistentDataPath}/{typeof(T).Name}.txt";
+            return Path.Combine(Application.persistentDataPath, $"{typeof(T).Name}.{Format}");
         }
     }
 }

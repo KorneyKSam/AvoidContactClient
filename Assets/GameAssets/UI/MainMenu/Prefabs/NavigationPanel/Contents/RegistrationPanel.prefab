@@ -313,6 +313,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4867565218233751837}
   - component: {fileID: 4867565218233751834}
+  - component: {fileID: 4974002486321580660}
   m_Layer: 5
   m_Name: RegistrationPanel
   m_TagString: Untagged
@@ -369,6 +370,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
+--- !u!114 &4974002486321580660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4867565218233751836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43e68e5667939c04baf61b3d49a566b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4867565217704959443
 PrefabInstance:
   m_ObjectHideFlags: 0

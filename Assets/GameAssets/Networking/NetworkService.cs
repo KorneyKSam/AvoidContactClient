@@ -9,11 +9,9 @@ namespace Networking
     public class NetworkService : MonoBehaviour, IInitializable
     {
         public event Action<bool> OnConnectionResult;
+        public MessageSender MessageSender => m_MessageSender;
 
         public bool IsConnected => m_Client.IsConnected;
-
-        [Inject]
-        private ISignServerCommandsExecutor m_ServerCommandsExecutor;
 
         private Client m_Client;
         private MessageSender m_MessageSender;
@@ -24,7 +22,6 @@ namespace Networking
             m_Client = new Client();
             AddHandlersForClient(m_Client);
             m_MessageSender = new MessageSender(m_Client);
-            MessageReceiver.SetServerCommandsExecutor(m_ServerCommandsExecutor);
         }
 
         public void Connect(string ip, ushort port)

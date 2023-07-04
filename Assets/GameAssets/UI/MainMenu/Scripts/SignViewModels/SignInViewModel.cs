@@ -1,27 +1,40 @@
 using MVVM;
+using Networking;
 using UnityWeld.Binding;
+using Zenject;
 
 namespace UI
 {
     [Binding]
-    public class SignInViewModel : BaseViewModel
+    public class SignInViewModel : BasePropertyChanged
     {
-        private string m_Login;
-        private string m_Password;
+        [Inject]
+        private SignInModel m_SignInModel;
+
+        public SignInModel Model => m_SignInModel;
+
+        private string m_Message;
         private bool m_IsAutomaticlAuthorization;
 
         [Binding]
         public string Login
         {
-            get => m_Login;
-            set => Set(ref m_Login, value);
+            get => m_SignInModel.Login;
+            set => Set((value) => m_SignInModel.Login = value, m_SignInModel.Login, value);
         }
 
         [Binding]
         public string Password
         {
-            get => m_Password;
-            set => Set(ref m_Password, value);
+            get => m_SignInModel.Password;
+            set => Set((value) => m_SignInModel.Password = value, m_SignInModel.Password, value);
+        }
+
+        [Binding]
+        public string Message
+        {
+            get => m_Message;
+            set => Set(ref m_Message, value);
         }
 
         [Binding]

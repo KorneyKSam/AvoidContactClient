@@ -4,7 +4,7 @@ using UnityWeld.Binding;
 namespace UI
 {
     [Binding]
-    public class SignUpViewModel : BaseViewModel
+    public class SignUpViewModel : BasePropertyChanged
     {
         private string m_Login;
         private string m_Email;
