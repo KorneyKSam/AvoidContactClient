@@ -1,6 +1,6 @@
 namespace Networking
 {
-    public enum ServerCommands
+    public enum ServerCommands : ushort
     {
         SignInResult = 1,
         SignUpResult = 2,

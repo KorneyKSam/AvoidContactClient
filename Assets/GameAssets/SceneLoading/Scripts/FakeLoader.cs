@@ -1,18 +1,21 @@
 using System;
 using System.Threading.Tasks;
-using UnityEngine;
 
 namespace SceneLoading
 {
     public class FakeLoader : BaseLoader
     {
+        public bool IsLoading => m_IsLoading;
+
         private const int FullPercentage = 100;
 
         private int m_Milliseconds;
         private int m_CurrentMilliseconds;
+        private bool m_IsLoading;
 
         public void ShowFakeLoadAnimation(int milliseconds, bool allowActivation = true, bool useResumeButton = true)
         {
+            m_IsLoading = true;
             m_CurrentMilliseconds = 0;
             m_Milliseconds = milliseconds;
             IsActivationAllowed = allowActivation;
@@ -27,6 +30,7 @@ namespace SceneLoading
         protected override void FinishLoading()
         {
             LoadingScreen.SetActive(false);
+            m_IsLoading = false;
         }
 
         private async void LoadAsync(bool useResumeButton)

@@ -1,3 +1,4 @@
+using Networking.Enums;
 using Riptide;
 
 namespace Networking
@@ -7,13 +8,13 @@ namespace Networking
         [MessageHandler((ushort)ServerCommands.SignInResult)]
         public static void ShowSignInResult(Message message)
         {
-            SignEventsHolder.InvokeSignIn(message.GetBool(), message.GetString());
+            SignEventsHolder.InvokeSignIn((SignInResult)message.GetByte());
         }
 
         [MessageHandler((ushort)ServerCommands.SignUpResult)]
         public static void ShowSignUpResult(Message message)
         {
-            SignEventsHolder.InvokeSignUp(message.GetBool(), message.GetString());
+            SignEventsHolder.InvokeSignUp((SignUpResult)message.GetByte());
         }
 
         [MessageHandler((ushort)ServerCommands.SignOutResult)]

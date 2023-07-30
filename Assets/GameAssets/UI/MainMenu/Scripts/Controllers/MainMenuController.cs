@@ -1,133 +1,165 @@
 using Common;
-using Common.Data;
 using Networking;
-using SceneLoading;
+using UI.Popups;
 using UnityEngine;
 using Zenject;
 
 namespace UI
 {
-    public class MainMenuController : MonoBehaviour
+    public class MainMenuController : MonoBehaviour, IInitializable
     {
-        [Header("Network Connection")]
-        [SerializeField]
-        private string m_Ip = "127.0.0.1";
+        [Inject]
+        private ServerConnector m_ServerConnector;
 
-        [SerializeField]
-        private ushort m_Port = 7777;
-
-        [Header("Fake loading")]
-        [SerializeField]
-        private int m_LoadingMilliseconds = 1000;
+        [Inject]
+        private ServerSigner m_ServerSigner;
 
         [Inject]
         private NavigationPanelConroller m_NavigationPanel;
 
         [Inject]
-        private FakeLoader m_FakeLoader;
-
-        [Inject]
-        private NetworkService m_NetworkService;
-
-        [Inject]
-        private DataService m_DataService;
-
-        [Inject]
-        private SignController m_SignController;
-
-        [Inject]
         private CameraController m_CameraController;
 
-        private GlobalData m_GlobalData;
+        [Inject]
+        private PopupController m_PopupController;
+
+        private SignInViewModel SignInViewModel => m_NavigationPanel.SignInViewModel;
+        private SignUpViewModel SignUpViewModel => m_NavigationPanel.SignUpViewModel;
+        private NavigationMainMenuViewModel NavigationMainMenuViewModel => m_NavigationPanel.NavigationMainMenuViewModel;
 
         public void Initialize()
         {
+            if (!m_ServerConnector.IsConnected)
+            {
+                StartConnecting(showLoadingScreen: true);
+            }
 
-            m_GlobalData = m_DataService.Load<GlobalData>();
             m_NavigationPanel.Init(m_CameraController);
             ShowMainContent();
 
-            if (!m_NetworkService.IsConnected)
-            {
-                StartConnecting();
-            }
-        }
-
-        private void Awake()
-        {
-            Initialize();
-        }
-
-        private void StartConnecting()
-        {
-            m_FakeLoader.ShowFakeLoadAnimation(m_LoadingMilliseconds, allowActivation: false, useResumeButton: false);
-            m_NetworkService.Connect(m_Ip, m_Port);
-            m_NetworkService.OnConnectionResult += OnConnectionResult;
-        }
-
-        private void OnConnectionResult(bool isConnected)
-        {
-            m_FakeLoader.AllowActivation(true);
-
-            if (isConnected)
-            {
-                if (m_GlobalData.IsAutomaticAuthorization)
-                {
-                    OnAuthorization(m_NavigationPanel.SignInModel);
-                }
-            }
-        }
-
-        private void ShowAuthorizationPanel()
-        {
-            m_NavigationPanel.UpdateSignInView(m_GlobalData.IsAutomaticAuthorization);
-            m_NavigationPanel.MoveToMiddle();
-            m_NavigationPanel.SetNavigationContent(NavigationPanelContent.Authorization);
+            AddMainMenuListeners();
             AddAuthorizationListeners();
+            AddRegistrationListeners();
         }
 
-        private void ShowRegistrationPanel()
+        private void StartConnecting(bool showLoadingScreen)
         {
-            RemoveAuthorizationListeners();
-            m_NavigationPanel.MoveToMiddle();
-            m_NavigationPanel.SetNavigationContent(NavigationPanelContent.Registraction);
+            m_ServerConnector.Connect(showLoadingScreen, (isConnected) =>
+            {
+                if (isConnected)
+                {
+                    m_ServerSigner.TryToSignIn((isSignedIn, message) =>
+                    {
+                        if (isSignedIn)
+                        {
+                            RemoveSignListeners();
+                        }
+                    });
+                }
+            });
         }
 
         private void ShowMainContent()
         {
-            RemoveAuthorizationListeners();
             m_NavigationPanel.MoveToLeft();
             m_NavigationPanel.SetNavigationContent(NavigationPanelContent.MainContent);
         }
 
-        private void OnAuthorization(SignInModel signInModel)
+        private void ShowAuthorizationPanel()
         {
-            m_NetworkService.MessageSender.SignIn(signInModel);
-        }
+            m_NavigationPanel.MoveToMiddle();
+            m_NavigationPanel.SetNavigationContent(NavigationPanelContent.Authorization);
 
-        private void OnSignIn(bool success, string message)
-        {
-            if (success)
+            if (!m_ServerConnector.IsConnected)
             {
-                ShowMainContent();
-            }
-            else
-            {
-                m_NavigationPanel.SetLogInFailed(message);
+                StartConnecting(showLoadingScreen: false);
             }
         }
 
+        private void ShowRegistrationPanel()
+        {
+            m_NavigationPanel.MoveToMiddle();
+            m_NavigationPanel.SetNavigationContent(NavigationPanelContent.Registraction);
+        }
+
+        private void OnMultiplayerClick()
+        {
+            if (!m_ServerSigner.IsLogedIn)
+            {
+                m_PopupController.ShowConfirmationPopup(ConfirmationPopupType.LogIn, (isConfirmed) =>
+                {
+                    if (isConfirmed)
+                    {
+                        ShowAuthorizationPanel();
+                    }
+                });
+            }
+        }
+
+        private void OnAuthorizationClick()
+        {
+            m_ServerSigner.TryToSignIn(SignInViewModel.Login, SignInViewModel.Password, (success, message) =>
+            {
+                if (success)
+                {
+                    ShowMainContent();
+                    RemoveSignListeners();
+                }
+                else
+                {
+                    m_NavigationPanel.SetLogInFailed(message);
+                }
+            });
+        }
+
+        private void Registration()
+        {
+            m_ServerSigner.TryToSignUp(SignUpViewModel.GetSignUpModel());
+        }
+
+        private void RemoveSignListeners()
+        {
+            RemoveAuthorizationListeners();
+            RemoveRegistrationListeners();
+        }
+
+        private void AddMainMenuListeners()
+        {
+            RemoveMainMenuListeners();
+            NavigationMainMenuViewModel.MultiplayerBtn.onClick.AddListener(OnMultiplayerClick);
+        }
+
+        private void RemoveMainMenuListeners()
+        {
+            NavigationMainMenuViewModel.MultiplayerBtn.onClick.RemoveListener(OnMultiplayerClick);
+        }
 
         private void AddAuthorizationListeners()
         {
-            m_NavigationPanel.OnAuthorizationClick += OnAuthorization;
-            SignEventsHolder.OnSignIn.AddListener(OnSignIn);
+            RemoveAuthorizationListeners();
+            SignInViewModel.OfflineBtn.onClick.AddListener(ShowMainContent);
+            SignInViewModel.AuthorizationBtn.onClick.AddListener(OnAuthorizationClick);
+            SignInViewModel.TransitToRegistrationBtn.onClick.AddListener(ShowRegistrationPanel);
         }
 
         private void RemoveAuthorizationListeners()
         {
-            m_NavigationPanel.OnAuthorizationClick -= OnAuthorization;
-            SignEventsHolder.OnSignIn.RemoveListener(OnSignIn);
+            SignInViewModel.OfflineBtn.onClick.RemoveListener(ShowMainContent);
+            SignInViewModel.AuthorizationBtn.onClick.RemoveListener(OnAuthorizationClick);
+            SignInViewModel.TransitToRegistrationBtn.onClick.RemoveListener(ShowRegistrationPanel);
+        }
+
+        private void AddRegistrationListeners()
+        {
+            RemoveRegistrationListeners();
+            SignUpViewModel.RegistrationBtn.onClick.AddListener(Registration);
+            SignUpViewModel.CancelRegistration.onClick.AddListener(ShowMainContent);
+        }
+
+        private void RemoveRegistrationListeners()
+        {
+            SignUpViewModel.RegistrationBtn.onClick.RemoveListener(Registration);
+            SignUpViewModel.CancelRegistration.onClick.RemoveListener(ShowMainContent);
         }
     }
 }

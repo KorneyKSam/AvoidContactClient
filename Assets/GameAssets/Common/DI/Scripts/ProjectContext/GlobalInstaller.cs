@@ -1,6 +1,6 @@
 using Common;
-using Common.Data;
 using Networking;
+using Riptide;
 using SceneLoading;
 using UnityEngine;
 using Zenject;
@@ -11,26 +11,30 @@ public class GlobalInstaller : MonoInstaller
     private UILoadingScreen m_LoadingScreen;
 
     [SerializeField]
-    private NetworkService m_NetworkService;
+    private ServerConnector m_ServerConnector;
 
     [SerializeField]
     private CameraController m_CameraController;
 
     public override void InstallBindings()
     {
+        BindData();
         BindSceneLoading();
         BindNetworking();
         BindCameraController();
+    }
 
-        var dataService = new DataService();
-        Container.Bind<DataService>().FromInstance(dataService).AsSingle();
-        Container.Bind<SignInModel>().FromInstance(dataService.Load<SignInModel>()).AsSingle();
+    private void BindData()
+    {
+        Container.Bind<DataService>().FromNew().AsSingle();
+        Container.BindInterfacesAndSelfTo<SignerInfo>().FromNew().AsSingle();
+        Container.BindInterfacesAndSelfTo<ServerConnectionInfo>().FromNew().AsSingle();
     }
 
     private void BindSceneLoading()
     {
         var loadingScreenInstance = InstantiateWithDefaultValues(m_LoadingScreen);
-        Container.Bind<UILoadingScreen>().FromInstance(loadingScreenInstance).AsCached();
+        Container.Bind<UILoadingScreen>().FromInstance(loadingScreenInstance).AsSingle();
         Container.QueueForInject(loadingScreenInstance);
         Container.Bind<SceneLoader>().FromNew().AsSingle();
         Container.Bind<FakeLoader>().FromNew().AsSingle();
@@ -38,8 +42,11 @@ public class GlobalInstaller : MonoInstaller
 
     private void BindNetworking()
     {
-        var networkService = Container.InstantiatePrefabForComponent<NetworkService>(m_NetworkService, Vector2.zero, Quaternion.identity, null);
-        Container.Bind(typeof(NetworkService), typeof(IInitializable)).FromInstance(networkService).AsSingle();
+        Container.Bind<Client>().FromNew().AsSingle();
+        Container.Bind<MessageSender>().FromNew().AsSingle();
+        var networkService = Container.InstantiatePrefabForComponent<ServerConnector>(m_ServerConnector, Vector2.zero, Quaternion.identity, null);
+        Container.BindInterfacesAndSelfTo<ServerConnector>().FromInstance(networkService).AsSingle();
+        Container.BindInterfacesAndSelfTo<ServerSigner>().FromNew().AsSingle();
     }
 
     private void BindCameraController()

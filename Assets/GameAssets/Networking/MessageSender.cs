@@ -1,27 +1,24 @@
 using Riptide;
+using Zenject;
 
 namespace Networking
 {
     public class MessageSender
     {
+        [Inject]
         private Client m_Client;
 
-        public MessageSender(Client client)
+        public void SignIn(string login, string password)
         {
-            m_Client = client;
-        }
-
-        public void SignIn(SignInModel signInModel)
-        {
-            var message = Message.Create(MessageSendMode.Reliable, ClientCommands.SignIn);
-            message.AddString(signInModel.Login);
-            message.AddString(signInModel.Password);
+            var message = Message.Create(MessageSendMode.Reliable, (ushort)ClientCommands.SignIn);
+            message.AddString(login);
+            message.AddString(password);
             m_Client.Send(message);
         }
 
         public void SignUp(SignUpModel signUpModel)
         {
-            var message = Message.Create(MessageSendMode.Reliable, ClientCommands.SignUp);
+            var message = Message.Create(MessageSendMode.Reliable, (ushort)ClientCommands.SignUp);
             message.AddString(signUpModel.Login);
             message.AddString(signUpModel.Password);
             message.AddString(signUpModel.Email);
@@ -30,7 +27,7 @@ namespace Networking
 
         public void SignOut()
         {
-            var message = Message.Create(MessageSendMode.Reliable, ClientCommands.SignOut);
+            var message = Message.Create(MessageSendMode.Reliable, (ushort)ClientCommands.SignOut);
             m_Client.Send(message);
         }
     }
