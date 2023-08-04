@@ -9,6 +9,12 @@ namespace Networking
 {
     public class ServerConnector : MonoBehaviour, IInitializable
     {
+        public event EventHandler<DisconnectedEventArgs> OnServerDisconnected
+        {
+            add { m_Client.Disconnected += value; }
+            remove { m_Client.Disconnected -= value; }
+        }
+
         public bool IsConnected => m_ServerConnectionInfo.IsConnected;
 
         [Header("Connection")]

@@ -1,6 +1,7 @@
 using Common;
 using Common.Data;
 using Networking.Enums;
+using Riptide;
 using System;
 using Zenject;
 
@@ -19,6 +20,9 @@ namespace Networking
         [Inject]
         private DataService m_DataService;
 
+        [Inject]
+        private ServerConnector m_ServerConnector;
+
         private bool m_IsSignerBusy;
         private Action<bool, string> m_ResultCallback;
         private string m_Login;
@@ -30,6 +34,7 @@ namespace Networking
             UpdateModelByData(signInData);
             SignEventsHolder.OnSignIn.AddListener(OnSignInResult);
             SignEventsHolder.OnSignUp.AddListener(OnSignUpResult);
+            m_ServerConnector.OnServerDisconnected += OnServerDisconnected;
         }
 
         public void TryToSignIn(Action<bool, string> onResultCallback = null)
@@ -107,6 +112,12 @@ namespace Networking
             m_SignerInfo.Login = signInData.Login;
             m_SignerInfo.Password = signInData.Password;
             m_SignerInfo.IsAutomaticAuthorization = signInData.IsAutomaticAuthorization;
+        }
+
+        private void OnServerDisconnected(object sender, DisconnectedEventArgs e)
+        {
+            m_ResultCallback?.Invoke(false, CommonNetworkMessages.Disconnected);
+            m_IsSignerBusy = false;
         }
     }
 }
