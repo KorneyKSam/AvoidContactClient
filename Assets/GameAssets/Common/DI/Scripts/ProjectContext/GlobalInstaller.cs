@@ -13,15 +13,11 @@ public class GlobalInstaller : MonoInstaller
     [SerializeField]
     private ServerConnector m_ServerConnector;
 
-    [SerializeField]
-    private CameraController m_CameraController;
-
     public override void InstallBindings()
     {
         BindData();
         BindSceneLoading();
         BindNetworking();
-        BindCameraController();
     }
 
     private void BindData()
@@ -47,12 +43,6 @@ public class GlobalInstaller : MonoInstaller
         var networkService = Container.InstantiatePrefabForComponent<ServerConnector>(m_ServerConnector, Vector2.zero, Quaternion.identity, null);
         Container.BindInterfacesAndSelfTo<ServerConnector>().FromInstance(networkService).AsSingle();
         Container.BindInterfacesAndSelfTo<ServerSigner>().FromNew().AsSingle();
-    }
-
-    private void BindCameraController()
-    {
-        var cameraController = InstantiateWithDefaultValues(m_CameraController);
-        Container.Bind<CameraController>().FromInstance(cameraController);
     }
 
     private T InstantiateWithDefaultValues<T>(T prefab) where T : MonoBehaviour

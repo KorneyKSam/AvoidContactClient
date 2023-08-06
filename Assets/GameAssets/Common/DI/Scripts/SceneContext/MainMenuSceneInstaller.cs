@@ -1,3 +1,4 @@
+using Common;
 using UI;
 using UI.Popups;
 using UnityEngine;
@@ -14,10 +15,14 @@ public class MainMenuSceneInstaller : MonoInstaller
     [SerializeField]
     private PopupController m_PopupController;
 
+    [SerializeField]
+    private CameraController m_CameraController;
+
     public override void InstallBindings()
     {
         Container.Bind<NavigationPanelConroller>().FromInstance(m_NavigationPanelConroller).AsSingle();
         Container.BindInterfacesAndSelfTo<MainMenuController>().FromInstance(m_MainMenuController).AsSingle();
         Container.Bind<PopupController>().FromInstance(m_PopupController).AsSingle();
+        Container.Bind<CameraController>().FromInstance(m_CameraController).AsSingle();
     }
 }
