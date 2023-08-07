@@ -37,6 +37,9 @@ namespace UI
 
         public void Initialize()
         {
+            m_AuthorizationDialog = m_DialogService.GetDialog<AuthorizationDialog>();
+            m_RegistrationDialog = m_DialogService.GetDialog<RegistrationDialog>();
+
             if (!m_ServerConnector.IsConnected)
             {
                 StartConnecting(showLoadingScreen: true);
@@ -45,9 +48,6 @@ namespace UI
             AddMainMenuListeners();
             AddAuthorizationListeners();
             AddRegistrationListeners();
-
-            m_AuthorizationDialog = m_DialogService.GetDialog<AuthorizationDialog>();
-            m_RegistrationDialog = m_DialogService.GetDialog<RegistrationDialog>();
         }
 
         private void StartConnecting(bool showLoadingScreen)
@@ -124,7 +124,7 @@ namespace UI
                 }
                 else
                 {
-                    m_AuthorizationDialog.Message = message;
+                    m_AuthorizationDialog.TooltipMessage = message;
                 }
             });
         }
@@ -168,15 +168,15 @@ namespace UI
 
         private void AddRegistrationListeners()
         {
-            RemoveRegistrationListeners();
-            m_RegistrationDialog.RegistrationBtn.onClick.AddListener(Registration);
-            m_RegistrationDialog.CancelRegistration.onClick.AddListener(OnRegistrationCancel);
+            //RemoveRegistrationListeners();
+            //m_RegistrationDialog.RegistrationBtn.onClick.AddListener(Registration);
+            //m_RegistrationDialog.CancelRegistration.onClick.AddListener(OnRegistrationCancel);
         }
 
         private void RemoveRegistrationListeners()
         {
-            m_RegistrationDialog.RegistrationBtn.onClick.RemoveListener(Registration);
-            m_RegistrationDialog.CancelRegistration.onClick.RemoveListener(OnRegistrationCancel);
+            //m_RegistrationDialog.RegistrationBtn.onClick.RemoveListener(Registration);
+            //m_RegistrationDialog.CancelRegistration.onClick.RemoveListener(OnRegistrationCancel);
         }
 
         private ConfirmationDialogInfo GetConfirmationInfo(ConfirmationDialogType confirmationPopupType)

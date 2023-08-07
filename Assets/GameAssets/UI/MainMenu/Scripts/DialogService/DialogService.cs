@@ -19,7 +19,7 @@ namespace DialogBoxService
         [SerializeField, GameObjectOfType(typeof(IDialogBox)), Tooltip("Game object has to implement " + nameof(IDialogBox))]
         private List<GameObject> m_GODialogBoxes;
 
-        private List<IDialogBox> m_DialogBoxes;
+        private List<IDialogBox> m_DialogBoxes = new();
 
         public T Open<T>(BoxAnimation boxAnimation = BoxAnimation.Zoom, float duration = m_DefaultDuration, Action onCompleteAnimation = null) where T : IDialogBox
         {
@@ -46,7 +46,7 @@ namespace DialogBoxService
             }
             else
             {
-                Debug.Log($"There is no dialog {nameof(T)} in list!!!"); //ToDo advanced dbugger
+                Debug.Log($"There is no dialog {typeof(T)} in list!!!"); //ToDo advanced dbugger
             }
             return (T)dialogBox;
         }
@@ -58,8 +58,8 @@ namespace DialogBoxService
                 default:
                 case BoxAnimation.Zoom:
                     transform.gameObject.SetActive(true);
-                    m_FadeOverlay.SetActive(isOpening);
-                    Vector2 endValue = isOpening ? Vector2.zero : Vector2.one;
+                    m_FadeOverlay.SetActive(true);
+                    Vector2 endValue = isOpening ? Vector2.one : Vector2.zero;
                     transform.DOScale(endValue, duration).OnComplete(() =>
                     {
                         transform.gameObject.SetActive(isOpening);
@@ -82,7 +82,11 @@ namespace DialogBoxService
         {
             if (m_GODialogBoxes != null)
             {
-                m_GODialogBoxes.ForEach(b => m_DialogBoxes.Add(b.GetComponent<IDialogBox>()));
+                m_GODialogBoxes.ForEach(b =>
+                {
+                    m_DialogBoxes.Add(b.GetComponent<IDialogBox>());
+                    b.transform.localScale = Vector3.zero;
+                });
             }
         }
     }

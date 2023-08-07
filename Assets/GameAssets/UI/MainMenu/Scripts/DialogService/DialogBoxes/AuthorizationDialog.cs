@@ -33,10 +33,10 @@ namespace DialogBoxService
         }
 
         [Binding]
-        public string Message
+        public string TooltipMessage
         {
-            get => m_Message;
-            set => Set(ref m_Message, value);
+            get => m_TooltipMessage;
+            set => Set(ref m_TooltipMessage, value);
         }
 
         [Binding]
@@ -81,7 +81,7 @@ namespace DialogBoxService
 
         private string m_Login;
         private string m_Password;
-        private string m_Message;
+        private string m_TooltipMessage;
         private bool m_IsConnected;
         private bool m_IsLoggedIn;
 
@@ -96,7 +96,7 @@ namespace DialogBoxService
         {
             Login = m_SignerInfo.Login;
             Password = m_SignerInfo.Password;
-            Message = m_SignerInfo.FailedMessage;
+            TooltipMessage = m_SignerInfo.FailedMessage;
             IsLoggedIn = m_SignerInfo.IsLoggedIn;
             IsConnected = m_ConnectionInfo.IsConnected;
             IsAutomaticAuthorization = m_SignerInfo.IsAutomaticAuthorization;
@@ -114,7 +114,7 @@ namespace DialogBoxService
             }
             else if (e.PropertyName == nameof(m_SignerInfo.FailedMessage))
             {
-                Message = m_SignerInfo.FailedMessage;
+                TooltipMessage = m_SignerInfo.FailedMessage;
             }
             else if (e.PropertyName == nameof(m_SignerInfo.IsLoggedIn))
             {

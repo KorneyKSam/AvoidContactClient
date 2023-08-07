@@ -169,7 +169,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72.75
+  m_fontSize: 38.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.078431375, g: 0.078431375, b: 0.078431375, a: 1}
-  m_EffectDistance: {x: 7, y: 7}
+  m_EffectDistance: {x: 5, y: 5}
   m_UseGraphicAlpha: 1
 --- !u!1 &1377045374479419743
 GameObject:
@@ -612,7 +612,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72.6
+  m_fontSize: 38.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -744,7 +744,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.078431375, g: 0.078431375, b: 0.078431375, a: 1}
-  m_EffectDistance: {x: 7, y: 7}
+  m_EffectDistance: {x: 5, y: 5}
   m_UseGraphicAlpha: 1
 --- !u!1 &7218224376256537870
 GameObject:
@@ -757,6 +757,7 @@ GameObject:
   - component: {fileID: 7588254290918826886}
   - component: {fileID: 5035096903841280531}
   - component: {fileID: 7338894940726669822}
+  - component: {fileID: 17559724152782523}
   m_Layer: 0
   m_Name: TooltipText
   m_TagString: Untagged
@@ -840,7 +841,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 63
+  m_fontSize: 33.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -882,6 +883,22 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &17559724152782523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7218224376256537870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1670825535, guid: 346623add6b93314fbf2b828a804b140, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewAdapterTypeName: 
+  viewAdapterOptions: {fileID: 0}
+  viewModelPropertyName: DialogBoxService.AuthorizationDialog.TooltipMessage
+  viewPropertyName: TMPro.TextMeshProUGUI.text
 --- !u!1 &8030940807081975153
 GameObject:
   m_ObjectHideFlags: 0
@@ -1141,7 +1158,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4088515436617878214, guid: 6c7c58cc8006f634881360ecafa3ded6, type: 3}
       propertyPath: m_fontSize
-      value: 53
+      value: 28.1
       objectReference: {fileID: 0}
     - target: {fileID: 4088515436617878214, guid: 6c7c58cc8006f634881360ecafa3ded6, type: 3}
       propertyPath: m_HorizontalAlignment
@@ -1264,6 +1281,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Enter login...
       objectReference: {fileID: 0}
+    - target: {fileID: 8285790918043704748, guid: 4cec6f8c8d850564daaf9da518701f49, type: 3}
+      propertyPath: m_fontSize
+      value: 45.95
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4cec6f8c8d850564daaf9da518701f49, type: 3}
 --- !u!224 &4249896426073562772 stripped
@@ -1271,6 +1292,33 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3689347163393382588, guid: 4cec6f8c8d850564daaf9da518701f49, type: 3}
   m_PrefabInstance: {fileID: 705266318722025000}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5931100205230609491 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6594989270329266811, guid: 4cec6f8c8d850564daaf9da518701f49, type: 3}
+  m_PrefabInstance: {fileID: 705266318722025000}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4326518233375896429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5931100205230609491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1957390036, guid: 346623add6b93314fbf2b828a804b140, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewModelPropertyName: DialogBoxService.AuthorizationDialog.Login
+  viewEventName: TMPro.TMP_InputField.onValueChanged
+  viewPropertyName: TMPro.TMP_InputField.text
+  viewAdapterTypeName: 
+  viewAdapterOptions: {fileID: 0}
+  viewModelAdapterTypeName: 
+  viewModelAdapterOptions: {fileID: 0}
+  exceptionPropertyName: 
+  exceptionAdapterTypeName: 
+  exceptionAdapterOptions: {fileID: 0}
 --- !u!1001 &1400161638962859543
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1372,7 +1420,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4088515436617878214, guid: 6c7c58cc8006f634881360ecafa3ded6, type: 3}
       propertyPath: m_fontSize
-      value: 53
+      value: 35.9
       objectReference: {fileID: 0}
     - target: {fileID: 4088515436617878214, guid: 6c7c58cc8006f634881360ecafa3ded6, type: 3}
       propertyPath: m_HorizontalAlignment
@@ -1487,6 +1535,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4795980053591507716, guid: 4cec6f8c8d850564daaf9da518701f49, type: 3}
+      propertyPath: m_InputType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4795980053591507716, guid: 4cec6f8c8d850564daaf9da518701f49, type: 3}
+      propertyPath: m_ContentType
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4795980053591507716, guid: 4cec6f8c8d850564daaf9da518701f49, type: 3}
+      propertyPath: m_CharacterValidation
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6594989270329266811, guid: 4cec6f8c8d850564daaf9da518701f49, type: 3}
       propertyPath: m_Name
       value: PasswordField
@@ -1495,6 +1555,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Enter password...
       objectReference: {fileID: 0}
+    - target: {fileID: 8285790918043704748, guid: 4cec6f8c8d850564daaf9da518701f49, type: 3}
+      propertyPath: m_fontSize
+      value: 38.45
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4cec6f8c8d850564daaf9da518701f49, type: 3}
 --- !u!224 &434817525687718639 stripped
@@ -1502,6 +1566,33 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3689347163393382588, guid: 4cec6f8c8d850564daaf9da518701f49, type: 3}
   m_PrefabInstance: {fileID: 3835933899533535827}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7979782889559447592 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6594989270329266811, guid: 4cec6f8c8d850564daaf9da518701f49, type: 3}
+  m_PrefabInstance: {fileID: 3835933899533535827}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &470896504509970036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7979782889559447592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1957390036, guid: 346623add6b93314fbf2b828a804b140, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewModelPropertyName: DialogBoxService.AuthorizationDialog.Password
+  viewEventName: TMPro.TMP_InputField.onValueChanged
+  viewPropertyName: TMPro.TMP_InputField.text
+  viewAdapterTypeName: 
+  viewAdapterOptions: {fileID: 0}
+  viewModelAdapterTypeName: 
+  viewModelAdapterOptions: {fileID: 0}
+  exceptionPropertyName: 
+  exceptionAdapterTypeName: 
+  exceptionAdapterOptions: {fileID: 0}
 --- !u!1001 &3874067247450167050
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1515,7 +1606,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3058810767882071437, guid: 029e4c07454dad74cb0143aa96d3f158, type: 3}
       propertyPath: m_fontSize
-      value: 52
+      value: 43.45
       objectReference: {fileID: 0}
     - target: {fileID: 5373557263247712841, guid: 029e4c07454dad74cb0143aa96d3f158, type: 3}
       propertyPath: m_Name
@@ -1636,7 +1727,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3058810767882071437, guid: 029e4c07454dad74cb0143aa96d3f158, type: 3}
       propertyPath: m_fontSize
-      value: 51.2
+      value: 27.05
       objectReference: {fileID: 0}
     - target: {fileID: 5373557263247712841, guid: 029e4c07454dad74cb0143aa96d3f158, type: 3}
       propertyPath: m_Name
@@ -1761,7 +1852,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3120556124968784616, guid: 7efc9360ae189cf4e89e70b48c9ed811, type: 3}
       propertyPath: m_fontSize
-      value: 67.65
+      value: 35.85
       objectReference: {fileID: 0}
     - target: {fileID: 9118711061905293112, guid: 7efc9360ae189cf4e89e70b48c9ed811, type: 3}
       propertyPath: m_Pivot.x
@@ -1854,3 +1945,30 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 9118711061905293112, guid: 7efc9360ae189cf4e89e70b48c9ed811, type: 3}
   m_PrefabInstance: {fileID: 8050402809484118968}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7357294769970670115 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 694286819657474459, guid: 7efc9360ae189cf4e89e70b48c9ed811, type: 3}
+  m_PrefabInstance: {fileID: 8050402809484118968}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4390628052332602955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7357294769970670115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1957390036, guid: 346623add6b93314fbf2b828a804b140, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewModelPropertyName: DialogBoxService.AuthorizationDialog.IsAutomaticAuthorization
+  viewEventName: UnityEngine.UI.Toggle.onValueChanged
+  viewPropertyName: UnityEngine.UI.Toggle.isOn
+  viewAdapterTypeName: 
+  viewAdapterOptions: {fileID: 0}
+  viewModelAdapterTypeName: 
+  viewModelAdapterOptions: {fileID: 0}
+  exceptionPropertyName: 
+  exceptionAdapterTypeName: 
+  exceptionAdapterOptions: {fileID: 0}
