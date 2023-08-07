@@ -1,6 +1,5 @@
-using Common;
+using DialogBoxService;
 using Networking;
-using UI.Popups;
 using UnityEngine;
 using Zenject;
 
@@ -8,6 +7,15 @@ namespace UI
 {
     public class MainMenuController : MonoBehaviour, IInitializable
     {
+        [SerializeField]
+        private AuthorizationDialog m_AuthorizationDialog;
+
+        [SerializeField]
+        private RegistrationDialog m_RegistrationDialog;
+
+        [SerializeField]
+        private MainScreen m_MainScreen;
+
         [Inject]
         private ServerConnector m_ServerConnector;
 
@@ -15,17 +23,7 @@ namespace UI
         private ServerSigner m_ServerSigner;
 
         [Inject]
-        private NavigationPanelConroller m_NavigationPanel;
-
-        [Inject]
-        private CameraController m_CameraController;
-
-        [Inject]
-        private PopupController m_PopupController;
-
-        private SignInViewModel SignInViewModel => m_NavigationPanel.SignInViewModel;
-        private SignUpViewModel SignUpViewModel => m_NavigationPanel.SignUpViewModel;
-        private NavigationMainMenuViewModel NavigationMainMenuViewModel => m_NavigationPanel.NavigationMainMenuViewModel;
+        private DialogService m_DialogService;
 
         public void Initialize()
         {
@@ -33,9 +31,6 @@ namespace UI
             {
                 StartConnecting(showLoadingScreen: true);
             }
-
-            m_NavigationPanel.Init(m_CameraController);
-            ShowMainContent();
 
             AddMainMenuListeners();
             AddAuthorizationListeners();
@@ -59,16 +54,9 @@ namespace UI
             });
         }
 
-        private void ShowMainContent()
-        {
-            m_NavigationPanel.MoveToLeft();
-            m_NavigationPanel.SetNavigationContent(NavigationPanelContent.MainContent);
-        }
-
         private void ShowAuthorizationPanel()
         {
-            m_NavigationPanel.MoveToMiddle();
-            m_NavigationPanel.SetNavigationContent(NavigationPanelContent.Authorization);
+            m_DialogService.Open<AuthorizationDialog>();
 
             if (!m_ServerConnector.IsConnected)
             {
@@ -78,43 +66,59 @@ namespace UI
 
         private void ShowRegistrationPanel()
         {
-            m_NavigationPanel.MoveToMiddle();
-            m_NavigationPanel.SetNavigationContent(NavigationPanelContent.Registraction);
+            m_DialogService.Open<RegistrationDialog>();
         }
 
         private void OnMultiplayerClick()
         {
             if (!m_ServerSigner.IsLogedIn)
             {
-                m_PopupController.ShowConfirmationPopup(ConfirmationPopupType.LogIn, (isConfirmed) =>
+                var confirmationDialog = m_DialogService.Open<ConfirmationDialog>();
+
+                confirmationDialog.SetInfo(GetConfirmationInfo(ConfirmationDialogType.LogIn), (isConfirmed) =>
                 {
+                    m_DialogService.Close<ConfirmationDialog>();
                     if (isConfirmed)
                     {
                         ShowAuthorizationPanel();
                     }
                 });
             }
+            else
+            {
+                // Show Multiplayer screen
+            }
+        }
+
+        private void OnAuthorizationCancel()
+        {
+            m_DialogService.Close<AuthorizationDialog>();
+        }
+
+        private void OnRegistrationCancel()
+        {
+            m_DialogService.Close<RegistrationDialog>();
         }
 
         private void OnAuthorizationClick()
         {
-            m_ServerSigner.TryToSignIn(SignInViewModel.Login, SignInViewModel.Password, (success, message) =>
+            m_ServerSigner.TryToSignIn(m_AuthorizationDialog.Login, m_AuthorizationDialog.Password, (success, message) =>
             {
                 if (success)
                 {
-                    ShowMainContent();
+                    m_DialogService.Close<AuthorizationDialog>();
                     RemoveSignListeners();
                 }
                 else
                 {
-                    m_NavigationPanel.SetLogInFailed(message);
+                    m_AuthorizationDialog.Message = message;
                 }
             });
         }
 
         private void Registration()
         {
-            m_ServerSigner.TryToSignUp(SignUpViewModel.GetSignUpModel());
+            m_ServerSigner.TryToSignUp(m_RegistrationDialog.GetSignUpModel());
         }
 
         private void RemoveSignListeners()
@@ -126,40 +130,53 @@ namespace UI
         private void AddMainMenuListeners()
         {
             RemoveMainMenuListeners();
-            NavigationMainMenuViewModel.MultiplayerBtn.onClick.AddListener(OnMultiplayerClick);
+            m_MainScreen.MultiplayerBtn.onClick.AddListener(OnMultiplayerClick);
         }
 
         private void RemoveMainMenuListeners()
         {
-            NavigationMainMenuViewModel.MultiplayerBtn.onClick.RemoveListener(OnMultiplayerClick);
+            m_MainScreen.MultiplayerBtn.onClick.RemoveListener(OnMultiplayerClick);
         }
 
         private void AddAuthorizationListeners()
         {
             RemoveAuthorizationListeners();
-            SignInViewModel.OfflineBtn.onClick.AddListener(ShowMainContent);
-            SignInViewModel.AuthorizationBtn.onClick.AddListener(OnAuthorizationClick);
-            SignInViewModel.TransitToRegistrationBtn.onClick.AddListener(ShowRegistrationPanel);
+            m_AuthorizationDialog.OfflineBtn.onClick.AddListener(OnAuthorizationCancel);
+            m_AuthorizationDialog.AuthorizationBtn.onClick.AddListener(OnAuthorizationClick);
+            m_AuthorizationDialog.TransitToRegistrationBtn.onClick.AddListener(ShowRegistrationPanel);
         }
 
         private void RemoveAuthorizationListeners()
         {
-            SignInViewModel.OfflineBtn.onClick.RemoveListener(ShowMainContent);
-            SignInViewModel.AuthorizationBtn.onClick.RemoveListener(OnAuthorizationClick);
-            SignInViewModel.TransitToRegistrationBtn.onClick.RemoveListener(ShowRegistrationPanel);
+            m_AuthorizationDialog.OfflineBtn.onClick.RemoveListener(OnAuthorizationCancel);
+            m_AuthorizationDialog.AuthorizationBtn.onClick.RemoveListener(OnAuthorizationClick);
+            m_AuthorizationDialog.TransitToRegistrationBtn.onClick.RemoveListener(ShowRegistrationPanel);
         }
 
         private void AddRegistrationListeners()
         {
             RemoveRegistrationListeners();
-            SignUpViewModel.RegistrationBtn.onClick.AddListener(Registration);
-            SignUpViewModel.CancelRegistration.onClick.AddListener(ShowMainContent);
+            m_RegistrationDialog.RegistrationBtn.onClick.AddListener(Registration);
+            m_RegistrationDialog.CancelRegistration.onClick.AddListener(OnRegistrationCancel);
         }
 
         private void RemoveRegistrationListeners()
         {
-            SignUpViewModel.RegistrationBtn.onClick.RemoveListener(Registration);
-            SignUpViewModel.CancelRegistration.onClick.RemoveListener(ShowMainContent);
+            m_RegistrationDialog.RegistrationBtn.onClick.RemoveListener(Registration);
+            m_RegistrationDialog.CancelRegistration.onClick.RemoveListener(OnRegistrationCancel);
+        }
+
+        private ConfirmationDialogInfo GetConfirmationInfo(ConfirmationDialogType confirmationPopupType)
+        {
+            //TODO:Loading localization by key and launguage tag
+
+            return new ConfirmationDialogInfo()
+            {
+                Title = "Кто ты по жизни",
+                Message = "Ответишь, ты кто по жизни?",
+                ConfirmText = "Отвечу!",
+                CancelText = "Я меньжуюсь!",
+            };
         }
     }
 }

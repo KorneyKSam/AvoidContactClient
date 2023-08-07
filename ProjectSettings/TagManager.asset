@@ -44,6 +44,6 @@ TagManager:
   - name: UI
     uniqueID: 1825752493
     locked: 0
-  - name: UIOverlay
+  - name: UIDialog
     uniqueID: 2777300529
     locked: 0

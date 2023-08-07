@@ -108,4 +108,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LoadingScreen: {fileID: 922239128, guid: 96c888d561614a8449f17b50491a8d43, type: 3}
   m_ServerConnector: {fileID: 7023882072495980596, guid: 0959358d409893f469e6fd281a3b072f, type: 3}
-  m_CameraController: {fileID: 4803663627702447169, guid: af789534cf818fe429a9d9f611bbe419, type: 3}
