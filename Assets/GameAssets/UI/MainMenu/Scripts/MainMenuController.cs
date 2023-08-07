@@ -1,6 +1,7 @@
 using DialogBoxService;
 using Networking;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 namespace UI
@@ -8,13 +9,19 @@ namespace UI
     public class MainMenuController : MonoBehaviour, IInitializable
     {
         [SerializeField]
-        private AuthorizationDialog m_AuthorizationDialog;
+        private DeskUI m_DeskUI;
 
         [SerializeField]
-        private RegistrationDialog m_RegistrationDialog;
+        private Button m_DeveloperBtn;
 
         [SerializeField]
-        private MainScreen m_MainScreen;
+        private Button m_LiqudatorNotes;
+
+        [SerializeField]
+        private Button m_PersonalFileBtn;
+
+        [SerializeField]
+        private Button m_ExitBtn;
 
         [Inject]
         private ServerConnector m_ServerConnector;
@@ -24,6 +31,9 @@ namespace UI
 
         [Inject]
         private DialogService m_DialogService;
+
+        private AuthorizationDialog m_AuthorizationDialog;
+        private RegistrationDialog m_RegistrationDialog;
 
         public void Initialize()
         {
@@ -35,6 +45,9 @@ namespace UI
             AddMainMenuListeners();
             AddAuthorizationListeners();
             AddRegistrationListeners();
+
+            m_AuthorizationDialog = m_DialogService.GetDialog<AuthorizationDialog>();
+            m_RegistrationDialog = m_DialogService.GetDialog<RegistrationDialog>();
         }
 
         private void StartConnecting(bool showLoadingScreen)
@@ -130,12 +143,12 @@ namespace UI
         private void AddMainMenuListeners()
         {
             RemoveMainMenuListeners();
-            m_MainScreen.MultiplayerBtn.onClick.AddListener(OnMultiplayerClick);
+            m_DeskUI.MultiplayerBtn.onClick.AddListener(OnMultiplayerClick);
         }
 
         private void RemoveMainMenuListeners()
         {
-            m_MainScreen.MultiplayerBtn.onClick.RemoveListener(OnMultiplayerClick);
+            m_DeskUI.MultiplayerBtn.onClick.RemoveListener(OnMultiplayerClick);
         }
 
         private void AddAuthorizationListeners()

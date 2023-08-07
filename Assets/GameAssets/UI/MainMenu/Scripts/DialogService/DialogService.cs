@@ -31,6 +31,11 @@ namespace DialogBoxService
             return TryToUseDialog<T>(boxAnimation, duration, onCompleteAnimation, false);
         }
 
+        public T GetDialog<T>() where T : IDialogBox
+        {
+            return (T)GetDialogBox<T>();
+        }
+
         private T TryToUseDialog<T>(BoxAnimation boxAnimation, float duration, Action onCompleteAnimation, bool isOpeningCommand) where T : IDialogBox
         {
             var dialogBox = GetDialogBox<T>();
