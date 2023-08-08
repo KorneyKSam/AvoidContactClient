@@ -1,7 +1,7 @@
 namespace Networking
 {
     public static class CommonNetworkMessages
-	{
-		public static string Disconnected = "Connection failed";
-	}
+    {
+        public static string Disconnected = "Connection failed";
+    }
 }

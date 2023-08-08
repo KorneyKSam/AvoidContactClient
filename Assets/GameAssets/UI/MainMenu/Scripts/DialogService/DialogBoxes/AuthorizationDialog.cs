@@ -33,6 +33,13 @@ namespace DialogBoxService
         }
 
         [Binding]
+        public bool IsAutomaticAuthorization
+        {
+            get => m_SignerInfo.IsAutomaticAuthorization;
+            set => Set((value) => m_SignerInfo.IsAutomaticAuthorization = value, m_SignerInfo.IsAutomaticAuthorization, value);
+        }
+
+        [Binding]
         public string TooltipMessage
         {
             get => m_TooltipMessage;
@@ -47,17 +54,21 @@ namespace DialogBoxService
         }
 
         [Binding]
-        public bool IsAutomaticAuthorization
-        {
-            get => m_SignerInfo.IsAutomaticAuthorization;
-            set => Set((value) => m_SignerInfo.IsAutomaticAuthorization = value, m_SignerInfo.IsAutomaticAuthorization, value);
-        }
-
-        [Binding]
         public bool IsConnected
         {
             get => m_IsConnected;
-            set => Set(ref m_IsConnected, value);
+            private set
+            {
+                Set(ref m_IsConnected, value);
+                if (!value)
+                {
+                    TooltipMessage = CommonNetworkMessages.Disconnected;
+                }
+                else if (TooltipMessage == CommonNetworkMessages.Disconnected)
+                {
+                    TooltipMessage = string.Empty;
+                }
+            }
         }
 
         [Header("Buttons")]

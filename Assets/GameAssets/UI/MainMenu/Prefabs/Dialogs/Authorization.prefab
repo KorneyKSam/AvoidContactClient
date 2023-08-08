@@ -169,7 +169,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38.5
+  m_fontSize: 72.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -612,7 +612,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38.45
+  m_fontSize: 72.6
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -841,7 +841,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 33.25
+  m_fontSize: 63
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -943,6 +943,7 @@ RectTransform:
   - {fileID: 7588254290918826886}
   - {fileID: 2299385108405705398}
   - {fileID: 954695689861840161}
+  - {fileID: 1360739643076580741}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1057,6 +1058,143 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1001 &49557311150501102
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4722924876666932356}
+    m_Modifications:
+    - target: {fileID: 468765418599115625, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+      propertyPath: m_Name
+      value: NonternetConnection
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320189531386362219, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320189531386362219, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320189531386362219, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320189531386362219, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.9173333
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320189531386362219, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.874
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320189531386362219, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.8755212
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320189531386362219, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.79355556
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320189531386362219, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320189531386362219, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320189531386362219, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320189531386362219, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320189531386362219, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320189531386362219, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320189531386362219, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320189531386362219, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320189531386362219, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320189531386362219, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320189531386362219, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320189531386362219, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320189531386362219, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1320189531386362219, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+--- !u!1 &446265065850554247 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 468765418599115625, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+  m_PrefabInstance: {fileID: 49557311150501102}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7705450385112902638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446265065850554247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1670825535, guid: 346623add6b93314fbf2b828a804b140, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewAdapterTypeName: UnityWeld.Binding.Adapters.BoolInversionAdapter
+  viewAdapterOptions: {fileID: 0}
+  viewModelPropertyName: DialogBoxService.AuthorizationDialog.IsConnected
+  viewPropertyName: UnityWeld.GOActivatorCrutch.IsActive
+--- !u!114 &7462353689538900626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446265065850554247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bd6325be548e3840869893be268a3da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_GameObjects:
+  - {fileID: 446265065850554247}
+--- !u!224 &1360739643076580741 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1320189531386362219, guid: a3dbbb51630aec14caf1970ad9c495ab, type: 3}
+  m_PrefabInstance: {fileID: 49557311150501102}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &124011368039147904
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1158,7 +1296,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4088515436617878214, guid: 6c7c58cc8006f634881360ecafa3ded6, type: 3}
       propertyPath: m_fontSize
-      value: 28.1
+      value: 53
       objectReference: {fileID: 0}
     - target: {fileID: 4088515436617878214, guid: 6c7c58cc8006f634881360ecafa3ded6, type: 3}
       propertyPath: m_HorizontalAlignment
@@ -1171,12 +1309,33 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1247299731203330229, guid: 6c7c58cc8006f634881360ecafa3ded6, type: 3}
   m_PrefabInstance: {fileID: 124011368039147904}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1664983086656980615}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1664983086656980615 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1631330992938315527, guid: 6c7c58cc8006f634881360ecafa3ded6, type: 3}
+  m_PrefabInstance: {fileID: 124011368039147904}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1936930404093225823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1664983086656980615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1670825535, guid: 346623add6b93314fbf2b828a804b140, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewAdapterTypeName: 
+  viewAdapterOptions: {fileID: 0}
+  viewModelPropertyName: DialogBoxService.AuthorizationDialog.IsConnected
+  viewPropertyName: UnityEngine.UI.Button.interactable
 --- !u!224 &2299385108405705398 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2184700177024889654, guid: 6c7c58cc8006f634881360ecafa3ded6, type: 3}
@@ -1283,7 +1442,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8285790918043704748, guid: 4cec6f8c8d850564daaf9da518701f49, type: 3}
       propertyPath: m_fontSize
-      value: 45.95
+      value: 72
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4cec6f8c8d850564daaf9da518701f49, type: 3}
@@ -1420,7 +1579,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4088515436617878214, guid: 6c7c58cc8006f634881360ecafa3ded6, type: 3}
       propertyPath: m_fontSize
-      value: 35.9
+      value: 53
       objectReference: {fileID: 0}
     - target: {fileID: 4088515436617878214, guid: 6c7c58cc8006f634881360ecafa3ded6, type: 3}
       propertyPath: m_HorizontalAlignment
@@ -1433,12 +1592,33 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1247299731203330229, guid: 6c7c58cc8006f634881360ecafa3ded6, type: 3}
   m_PrefabInstance: {fileID: 1400161638962859543}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 418264610713297168}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &418264610713297168 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1631330992938315527, guid: 6c7c58cc8006f634881360ecafa3ded6, type: 3}
+  m_PrefabInstance: {fileID: 1400161638962859543}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3209711005314873086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 418264610713297168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1670825535, guid: 346623add6b93314fbf2b828a804b140, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewAdapterTypeName: 
+  viewAdapterOptions: {fileID: 0}
+  viewModelPropertyName: DialogBoxService.AuthorizationDialog.IsConnected
+  viewPropertyName: UnityEngine.UI.Button.interactable
 --- !u!224 &954695689861840161 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2184700177024889654, guid: 6c7c58cc8006f634881360ecafa3ded6, type: 3}
@@ -1557,7 +1737,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8285790918043704748, guid: 4cec6f8c8d850564daaf9da518701f49, type: 3}
       propertyPath: m_fontSize
-      value: 38.45
+      value: 72
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4cec6f8c8d850564daaf9da518701f49, type: 3}
@@ -1606,7 +1786,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3058810767882071437, guid: 029e4c07454dad74cb0143aa96d3f158, type: 3}
       propertyPath: m_fontSize
-      value: 43.45
+      value: 52
       objectReference: {fileID: 0}
     - target: {fileID: 5373557263247712841, guid: 029e4c07454dad74cb0143aa96d3f158, type: 3}
       propertyPath: m_Name
@@ -1727,7 +1907,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3058810767882071437, guid: 029e4c07454dad74cb0143aa96d3f158, type: 3}
       propertyPath: m_fontSize
-      value: 27.05
+      value: 51.2
       objectReference: {fileID: 0}
     - target: {fileID: 5373557263247712841, guid: 029e4c07454dad74cb0143aa96d3f158, type: 3}
       propertyPath: m_Name
@@ -1819,12 +1999,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 029e4c07454dad74cb0143aa96d3f158, type: 3}
+--- !u!1 &1044273165495679148 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5373557263247712841, guid: 029e4c07454dad74cb0143aa96d3f158, type: 3}
+  m_PrefabInstance: {fileID: 4966543728686537445}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &333739652555337486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044273165495679148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1670825535, guid: 346623add6b93314fbf2b828a804b140, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewAdapterTypeName: 
+  viewAdapterOptions: {fileID: 0}
+  viewModelPropertyName: DialogBoxService.AuthorizationDialog.IsConnected
+  viewPropertyName: UnityEngine.UI.Button.interactable
 --- !u!114 &2670189136056174814 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7053446163276649019, guid: 029e4c07454dad74cb0143aa96d3f158, type: 3}
   m_PrefabInstance: {fileID: 4966543728686537445}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1044273165495679148}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
@@ -1852,7 +2053,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3120556124968784616, guid: 7efc9360ae189cf4e89e70b48c9ed811, type: 3}
       propertyPath: m_fontSize
-      value: 35.85
+      value: 67.65
       objectReference: {fileID: 0}
     - target: {fileID: 9118711061905293112, guid: 7efc9360ae189cf4e89e70b48c9ed811, type: 3}
       propertyPath: m_Pivot.x

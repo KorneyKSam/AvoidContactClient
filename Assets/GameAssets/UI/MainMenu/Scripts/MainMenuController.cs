@@ -38,6 +38,7 @@ namespace UI
         public void Initialize()
         {
             m_AuthorizationDialog = m_DialogService.GetDialog<AuthorizationDialog>();
+            m_AuthorizationDialog.Init();
             m_RegistrationDialog = m_DialogService.GetDialog<RegistrationDialog>();
 
             if (!m_ServerConnector.IsConnected)
