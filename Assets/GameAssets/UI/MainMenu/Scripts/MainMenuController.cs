@@ -1,5 +1,9 @@
+using Common;
+using Common.Data;
 using DialogBoxService;
 using Networking;
+using SceneLoading;
+using UI.DialogBoxes;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -8,6 +12,9 @@ namespace UI
 {
     public class MainMenuController : MonoBehaviour, IInitializable
     {
+        private const int FakeLoadingMilliseconds = 2000;
+
+        [Header("Buttons")]
         [SerializeField]
         private DeskUI m_DeskUI;
 
@@ -27,118 +34,59 @@ namespace UI
         private ServerConnector m_ServerConnector;
 
         [Inject]
-        private ServerSigner m_ServerSigner;
+        private SignService m_AuthorizationService;
 
         [Inject]
         private DialogService m_DialogService;
 
-        private AuthorizationDialog m_AuthorizationDialog;
-        private RegistrationDialog m_RegistrationDialog;
+        [Inject]
+        private FakeLoader m_FakeLoader;
+
+        [Inject]
+        private DataService m_DataService;
 
         public void Initialize()
         {
-            m_AuthorizationDialog = m_DialogService.GetDialog<AuthorizationDialog>();
-            m_AuthorizationDialog.Init();
-            m_RegistrationDialog = m_DialogService.GetDialog<RegistrationDialog>();
-
-            if (!m_ServerConnector.IsConnected)
-            {
-                StartConnecting(showLoadingScreen: true);
-            }
-
+            m_FakeLoader.ShowFakeLoadAnimation(FakeLoadingMilliseconds, allowActivation: false, useResumeButton: false);
+            TryToConnectToServer();
             AddMainMenuListeners();
-            AddAuthorizationListeners();
-            AddRegistrationListeners();
         }
 
-        private void StartConnecting(bool showLoadingScreen)
+        private void TryToConnectToServer()
         {
-            m_ServerConnector.Connect(showLoadingScreen, (isConnected) =>
-            {
-                if (isConnected)
-                {
-                    m_ServerSigner.TryToSignIn((isSignedIn, message) =>
-                    {
-                        if (isSignedIn)
-                        {
-                            RemoveSignListeners();
-                        }
-                    });
-                }
-            });
-        }
-
-        private void ShowAuthorizationPanel()
-        {
-            m_DialogService.Open<AuthorizationDialog>();
-
             if (!m_ServerConnector.IsConnected)
             {
-                StartConnecting(showLoadingScreen: false);
-            }
-        }
-
-        private void ShowRegistrationPanel()
-        {
-            m_DialogService.Open<RegistrationDialog>();
-        }
-
-        private void OnMultiplayerClick()
-        {
-            if (!m_ServerSigner.IsLogedIn)
-            {
-                var confirmationDialog = m_DialogService.Open<ConfirmationDialog>();
-
-                confirmationDialog.SetInfo(GetConfirmationInfo(ConfirmationDialogType.LogIn), (isConfirmed) =>
+                m_ServerConnector.Connect((isConnected) =>
                 {
-                    m_DialogService.Close<ConfirmationDialog>();
-                    if (isConfirmed)
+                    m_FakeLoader.AllowActivation(true);
+                    if (isConnected)
                     {
-                        ShowAuthorizationPanel();
+                        TryToAuthorizate();
                     }
                 });
             }
             else
             {
-                // Show Multiplayer screen
+                m_FakeLoader.AllowActivation(true);
             }
         }
 
-        private void OnAuthorizationCancel()
+        private void TryToAuthorizate()
         {
-            m_DialogService.Close<AuthorizationDialog>();
-        }
+            var authorizationData = m_DataService.Load<AuthorizationData>();
 
-        private void OnRegistrationCancel()
-        {
-            m_DialogService.Close<RegistrationDialog>();
-        }
-
-        private void OnAuthorizationClick()
-        {
-            m_ServerSigner.TryToSignIn(m_AuthorizationDialog.Login, m_AuthorizationDialog.Password, (success, message) =>
+            if (authorizationData.IsAutomaticAuthorization)
             {
-                if (success)
+                m_AuthorizationService.TryToSignIn(authorizationData.Login, authorizationData.Password,
+                (success) =>
                 {
-                    m_DialogService.Close<AuthorizationDialog>();
-                    RemoveSignListeners();
-                }
-                else
-                {
-                    m_AuthorizationDialog.TooltipMessage = message;
-                }
-            });
-        }
-
-        private void Registration()
-        {
-            m_ServerSigner.TryToSignUp(m_RegistrationDialog.GetSignUpModel());
-        }
-
-        private void RemoveSignListeners()
-        {
-            RemoveAuthorizationListeners();
-            RemoveRegistrationListeners();
+                    if (!success)
+                    {
+                        authorizationData.IsAutomaticAuthorization = false;
+                        m_DataService.Save(authorizationData);
+                    }
+                });
+            }
         }
 
         private void AddMainMenuListeners()
@@ -152,32 +100,63 @@ namespace UI
             m_DeskUI.MultiplayerBtn.onClick.RemoveListener(OnMultiplayerClick);
         }
 
-        private void AddAuthorizationListeners()
+        private void OnMultiplayerClick()
         {
-            RemoveAuthorizationListeners();
-            m_AuthorizationDialog.OfflineBtn.onClick.AddListener(OnAuthorizationCancel);
-            m_AuthorizationDialog.AuthorizationBtn.onClick.AddListener(OnAuthorizationClick);
-            m_AuthorizationDialog.TransitToRegistrationBtn.onClick.AddListener(ShowRegistrationPanel);
+            if (!m_AuthorizationService.IsLogedIn)
+            {
+                var confirmationDialog = m_DialogService.Open<ConfirmationDialog>();
+                confirmationDialog.SetInfo(GetConfirmationInfo(ConfirmationDialogType.LogIn), (isConfirmed) =>
+                {
+                    if (isConfirmed)
+                    {
+                        ShowAuthorizationDialog();
+                    }
+                    else
+                    {
+                        m_DialogService.Close<ConfirmationDialog>();
+                    }
+                });
+            }
+            else
+            {
+                // Show Multiplayer screen
+            }
         }
 
-        private void RemoveAuthorizationListeners()
+
+        private void ShowAuthorizationDialog()
         {
-            m_AuthorizationDialog.OfflineBtn.onClick.RemoveListener(OnAuthorizationCancel);
-            m_AuthorizationDialog.AuthorizationBtn.onClick.RemoveListener(OnAuthorizationClick);
-            m_AuthorizationDialog.TransitToRegistrationBtn.onClick.RemoveListener(ShowRegistrationPanel);
+            var authrizationDialog = m_DialogService.Open<AuthorizationDialog>();
+            AddAuthorizationListeners(authrizationDialog);
         }
 
-        private void AddRegistrationListeners()
+        private void HideAuthorizationPanel()
         {
-            //RemoveRegistrationListeners();
-            //m_RegistrationDialog.RegistrationBtn.onClick.AddListener(Registration);
-            //m_RegistrationDialog.CancelRegistration.onClick.AddListener(OnRegistrationCancel);
+            var authrizationDialog = m_DialogService.Close<AuthorizationDialog>();
+            RemoveAuthorizationListeners(authrizationDialog);
         }
 
-        private void RemoveRegistrationListeners()
+        private void AddAuthorizationListeners(AuthorizationDialog authorizationDialog)
         {
-            //m_RegistrationDialog.RegistrationBtn.onClick.RemoveListener(Registration);
-            //m_RegistrationDialog.CancelRegistration.onClick.RemoveListener(OnRegistrationCancel);
+            RemoveAuthorizationListeners(authorizationDialog);
+            authorizationDialog.OnCancelClick += HideAuthorizationPanel;
+            authorizationDialog.OnRegistrationClick += ShowRegistrationPanel;
+        }
+
+        private void RemoveAuthorizationListeners(AuthorizationDialog authorizationDialog)
+        {
+            authorizationDialog.OnCancelClick -= HideAuthorizationPanel;
+            authorizationDialog.OnRegistrationClick -= ShowRegistrationPanel;
+        }
+
+        private void ShowRegistrationPanel()
+        {
+            m_DialogService.Open<RegistrationDialog>();
+        }
+
+        private void OnRegistrationCancel()
+        {
+            m_DialogService.Close<RegistrationDialog>();
         }
 
         private ConfirmationDialogInfo GetConfirmationInfo(ConfirmationDialogType confirmationPopupType)

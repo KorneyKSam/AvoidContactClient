@@ -1,10 +1,12 @@
 using System;
-using UnityEngine;
 
 namespace DialogBoxService
 {
     public interface IDialogBox
     {
-        public Transform Transform { get; }
+        public bool IsActive { get; }
+        public DialogLayer SortingLayer { get; set; }
+
+        public void Activate(bool isActive, float duration, Action onCompleteAnimation = null);
     }
 }

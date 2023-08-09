@@ -1,21 +1,31 @@
 using Riptide;
 using Riptide.Utils;
-using SceneLoading;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 namespace Networking
 {
-    public class ServerConnector : MonoBehaviour, IInitializable
+    public class ServerConnector : MonoBehaviour, IInitializable, IConnectorInfo
     {
-        public event EventHandler<DisconnectedEventArgs> OnServerDisconnected
+        public event Action<bool> OnConnectionChanged;
+
+        public event EventHandler<ClientConnectedEventArgs> OnClientConnected
         {
-            add { m_Client.Disconnected += value; }
-            remove { m_Client.Disconnected -= value; }
+            add { m_Client.ClientConnected += value; }
+            remove { m_Client.ClientConnected -= value; }
         }
 
-        public bool IsConnected => m_ServerConnectionInfo.IsConnected;
+        public event EventHandler<ClientDisconnectedEventArgs> OnClientDisconnected
+        {
+            add { m_Client.ClientDisconnected += value; }
+            remove { m_Client.ClientDisconnected -= value; }
+        }
+        public bool IsLoopedReconnection { get; set; }
+
+        public bool IsConnected => m_Client.IsConnected;
+        public List<int> ConnectedPlayerIDs => m_ConnectedPlayerIDs;
 
         [Header("Connection")]
         [SerializeField]
@@ -24,76 +34,83 @@ namespace Networking
         [SerializeField]
         private ushort m_Port = 7777;
 
-        [Header("Fake loading")]
-        [SerializeField]
-        private int m_LoadingMilliseconds = 1000;
-
         [Inject]
         private Client m_Client;
 
-        [Inject]
-        private FakeLoader m_FakeLoader;
-
-        [Inject]
-        private ServerConnectionInfo m_ServerConnectionInfo;
-
-        private Action<bool> m_OnConnectionResult;
+        private List<int> m_ConnectedPlayerIDs = new();
+        private Action<bool> m_OnConnectionResultCallback;
+        private bool m_IsConnecting;
 
         public void Initialize()
         {
             RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
-            AddHandlersForClient(m_Client);
+            AddHandlers();
         }
 
-        public void Connect(bool showLoadingScreen = false, Action<bool> onConnectionResult = null)
+        public void Connect(Action<bool> resultCallback = null)
         {
-            m_OnConnectionResult = onConnectionResult;
-
-            if (showLoadingScreen)
+            if (!m_IsConnecting)
             {
-                m_FakeLoader.ShowFakeLoadAnimation(m_LoadingMilliseconds, allowActivation: false, useResumeButton: false);
+                m_IsConnecting = true;
+                m_Client.Connect($"{m_Ip}:{m_Port}");
+                m_OnConnectionResultCallback = resultCallback;
             }
-
-            m_Client.Connect($"{m_Ip}:{m_Port}");
         }
 
-        private void AddHandlersForClient(Client client)
+        private void AddHandlers()
         {
-            client.Connected += ConnectionHandler;
-            client.ConnectionFailed += ConnectionFailedHandler;
-            client.Disconnected += DisconnectedHandler;
-            client.ClientDisconnected += ClientDisconnectedHandler;
+            m_Client.Connected += ConnectionHandler;
+            m_Client.Disconnected += DisconnectedHandler;
+            m_Client.ClientConnected += ClientConnetedHandler;
+            m_Client.ConnectionFailed += ConnectionFailedHandler;
+            m_Client.ClientDisconnected += ClientDisconnectedHandler;
+        }
+
+        private void RemoveHandlers()
+        {
+            m_Client.Connected -= ConnectionHandler;
+            m_Client.Disconnected -= DisconnectedHandler;
+            m_Client.ClientConnected -= ClientConnetedHandler;
+            m_Client.ConnectionFailed -= ConnectionFailedHandler;
+            m_Client.ClientDisconnected -= ClientDisconnectedHandler;
         }
 
         private void ConnectionHandler(object sender, EventArgs e)
         {
-            m_ServerConnectionInfo.IsConnected = true;
-            DisableLoader();
-            m_OnConnectionResult?.Invoke(true);
-        }
-
-        private void ConnectionFailedHandler(object sender, ConnectionFailedEventArgs e)
-        {
-            m_ServerConnectionInfo.IsConnected = false;
-            DisableLoader();
-            m_OnConnectionResult?.Invoke(false);
+            m_IsConnecting = false;
+            InvokeCallback(true);
+            OnConnectionChanged?.Invoke(true);
         }
 
         private void DisconnectedHandler(object sender, DisconnectedEventArgs e)
         {
-            m_ServerConnectionInfo.IsConnected = false;
+            InvokeCallback(false);
+            OnConnectionChanged?.Invoke(false);
+            TryToReconnect();
+        }
+
+        private void ConnectionFailedHandler(object sender, ConnectionFailedEventArgs e)
+        {
+            m_IsConnecting = false;
+            InvokeCallback(false);
+            TryToReconnect();
+        }
+
+        private void ClientConnetedHandler(object sender, ClientConnectedEventArgs e)
+        {
+            m_ConnectedPlayerIDs.Add(e.Id);
         }
 
         private void ClientDisconnectedHandler(object sender, ClientDisconnectedEventArgs e)
         {
-
+            m_ConnectedPlayerIDs.Remove(e.Id);
         }
 
-        private void DisableLoader()
+        private void TryToReconnect()
         {
-            if (m_FakeLoader.IsLoading)
+            if (IsLoopedReconnection)
             {
-                m_FakeLoader.AllowActivation(true);
+                Connect();
             }
         }
 
@@ -102,9 +119,21 @@ namespace Networking
             m_Client.Update();
         }
 
+        private void OnDestroy()
+        {
+            m_Client.Disconnect();
+            RemoveHandlers();
+        }
+
         private void OnApplicationQuit()
         {
             m_Client.Disconnect();
+        }
+
+        private void InvokeCallback(bool result)
+        {
+            m_OnConnectionResultCallback?.Invoke(result);
+            m_OnConnectionResultCallback = null;
         }
     }
 }

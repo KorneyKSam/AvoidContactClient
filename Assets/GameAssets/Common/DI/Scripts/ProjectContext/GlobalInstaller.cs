@@ -23,8 +23,6 @@ public class GlobalInstaller : MonoInstaller
     private void BindData()
     {
         Container.Bind<DataService>().FromNew().AsSingle();
-        Container.BindInterfacesAndSelfTo<SignerInfo>().FromNew().AsSingle();
-        Container.BindInterfacesAndSelfTo<ServerConnectionInfo>().FromNew().AsSingle();
     }
 
     private void BindSceneLoading()
@@ -42,7 +40,7 @@ public class GlobalInstaller : MonoInstaller
         Container.Bind<MessageSender>().FromNew().AsSingle();
         var networkService = Container.InstantiatePrefabForComponent<ServerConnector>(m_ServerConnector, Vector2.zero, Quaternion.identity, null);
         Container.BindInterfacesAndSelfTo<ServerConnector>().FromInstance(networkService).AsSingle();
-        Container.BindInterfacesAndSelfTo<ServerSigner>().FromNew().AsSingle();
+        Container.BindInterfacesAndSelfTo<SignService>().FromNew().AsSingle();
     }
 
     private T InstantiateWithDefaultValues<T>(T prefab) where T : MonoBehaviour

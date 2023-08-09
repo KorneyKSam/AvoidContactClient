@@ -4,12 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityWeld.Binding;
 
-namespace DialogBoxService
+namespace UI.ViewModels
 {
     [Binding]
-    public class RegistrationDialog : BaseMonoPropertyChanged, IDialogBox
+    public class RegistrationViewModel : BaseMonoPropertyChanged
     {
-        public Transform Transform => gameObject.transform;
         public Button RegistrationBtn => m_RegistrationBtn;
         public Button CancelRegistration => m_CancelRegistration;
 
@@ -41,6 +40,20 @@ namespace DialogBoxService
             set => Set(ref m_RepeatedPassword, value);
         }
 
+        [Binding]
+        public string TooltipMessage
+        {
+            get => m_TooltipMessage;
+            set => Set(ref m_TooltipMessage, value);
+        }
+
+        [Binding]
+        public bool IsConnected
+        {
+            get => m_IsConnected;
+            set => Set(ref m_IsConnected, value);
+        }
+
         public SignUpModel GetSignUpModel()
         {
             return new SignUpModel()
@@ -61,5 +74,7 @@ namespace DialogBoxService
         private string m_Email = string.Empty;
         private string m_Password = string.Empty;
         private string m_RepeatedPassword = string.Empty;
+        private string m_TooltipMessage;
+        private bool m_IsConnected;
     }
 }

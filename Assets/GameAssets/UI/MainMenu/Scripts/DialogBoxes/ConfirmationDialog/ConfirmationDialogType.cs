@@ -1,4 +1,4 @@
-namespace DialogBoxService
+namespace UI.DialogBoxes
 {
     public enum ConfirmationDialogType
     {

@@ -1,11 +1,12 @@
+using DialogBoxService;
 using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DialogBoxService
+namespace UI.DialogBoxes
 {
-    public class ConfirmationDialog : MonoBehaviour, IDialogBox
+    public class ConfirmationDialog : ZoomedDialog
     {
         public Transform Transform => transform;
 

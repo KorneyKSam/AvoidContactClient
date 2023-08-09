@@ -4,7 +4,7 @@ using System;
 namespace Common.Data
 {
     [Serializable]
-    public class SignInData
+    public class AuthorizationData
     {
         [JsonProperty("AutoAuthorization")]
         public bool IsAutomaticAuthorization { get; set; }

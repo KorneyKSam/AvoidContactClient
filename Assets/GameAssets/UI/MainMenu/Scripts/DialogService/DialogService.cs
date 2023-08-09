@@ -1,4 +1,3 @@
-using DG.Tweening;
 using GOOfTpeAttribute;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ namespace DialogBoxService
     {
         public bool IsAnyDialogOpened => m_GODialogBoxes.Any(b => b.transform.gameObject.activeInHierarchy);
 
-        private const float m_DefaultDuration = 0.4f;
+        private const float m_DefaultDuration = 0.2f;
 
         [SerializeField]
         private GameObject m_FadeOverlay;
@@ -20,62 +19,113 @@ namespace DialogBoxService
         private List<GameObject> m_GODialogBoxes;
 
         private List<IDialogBox> m_DialogBoxes = new();
+        private int m_CountOfActiveDialogs => m_DialogBoxes.Count(d => d.IsActive);
 
-        public T Open<T>(BoxAnimation boxAnimation = BoxAnimation.Zoom, float duration = m_DefaultDuration, Action onCompleteAnimation = null) where T : IDialogBox
+        /// <summary>
+        /// Open dialog in layer with duration.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dialogLayer">Opening different dialogs in one layer is not possible, old dialog will be closed.</param>
+        /// <param name="duration"></param>
+        /// <param name="onCompleteAnimation">A callback that will be called when animation will be fully completed.</param>
+        /// <returns></returns>
+        public T Open<T>(DialogLayer dialogLayer = DialogLayer.UIDialog1, float duration = m_DefaultDuration, Action onCompleteAnimation = null) where T : IDialogBox
         {
-            return TryToUseDialog<T>(boxAnimation, duration, onCompleteAnimation, true);
-        }
-
-        public T Close<T>(BoxAnimation boxAnimation = BoxAnimation.Zoom, float duration = m_DefaultDuration, Action onCompleteAnimation = null) where T : IDialogBox
-        {
-            return TryToUseDialog<T>(boxAnimation, duration, onCompleteAnimation, false);
-        }
-
-        public T GetDialog<T>() where T : IDialogBox
-        {
-            return (T)GetDialogBox<T>();
-        }
-
-        private T TryToUseDialog<T>(BoxAnimation boxAnimation, float duration, Action onCompleteAnimation, bool isOpeningCommand) where T : IDialogBox
-        {
-            var dialogBox = GetDialogBox<T>();
-            if (dialogBox != null)
+            if (TryToGetDialog<T>(out var foundedDialog))
             {
-                m_FadeOverlay.SetActive(true);
-                ShowAnimation(boxAnimation, duration, onCompleteAnimation, isOpeningCommand, dialogBox.Transform);
+                if (foundedDialog.IsActive)
+                {
+                    Debug.Log($"Dialog {typeof(T)} is already opened!"); //ToDo advanced dbugger
+                }
+                else
+                {
+                    if (TryToGetOpenedDialogInLayer(dialogLayer, out var openedDialog))
+                    {
+                        CloseDialog(openedDialog, duration, onCompleteAnimation: () =>
+                        {
+                            OpenDialogInLayer(foundedDialog, dialogLayer, duration, onCompleteAnimation);
+                        });
+                    }
+                    else
+                    {
+                        OpenDialogInLayer(foundedDialog, dialogLayer, duration, onCompleteAnimation);
+                    }
+                }
+                return foundedDialog;
             }
             else
             {
-                Debug.Log($"There is no dialog {typeof(T)} in list!!!"); //ToDo advanced dbugger
+                onCompleteAnimation?.Invoke();
+                return default;
             }
-            return (T)dialogBox;
         }
 
-        private void ShowAnimation(BoxAnimation boxAnimation, float duration, Action onCompleteAnimation, bool isOpening, Transform transform)
+        public T Close<T>(float duration = m_DefaultDuration, Action onCompleteAnimation = null) where T : IDialogBox
         {
-            switch (boxAnimation)
+            if (TryToGetDialog<T>(out var foundedDialog))
             {
-                default:
-                case BoxAnimation.Zoom:
-                    transform.gameObject.SetActive(true);
-                    m_FadeOverlay.SetActive(true);
-                    Vector2 endValue = isOpening ? Vector2.one : Vector2.zero;
-                    transform.DOScale(endValue, duration).OnComplete(() =>
-                    {
-                        transform.gameObject.SetActive(isOpening);
-                        if (!isOpening && !IsAnyDialogOpened)
-                        {
-                            m_FadeOverlay.SetActive(false);
-                        }
-                        onCompleteAnimation?.Invoke();
-                    });
-                    break;
+                if (foundedDialog.IsActive)
+                {
+                    CloseDialog(foundedDialog, duration, onCompleteAnimation);
+                }
+                else
+                {
+                    Debug.Log($"Attempting to close dialog {typeof(T)}! Dialog is not opened!"); //ToDo Advanced debugger
+                }
+                return foundedDialog;
+            }
+            else
+            {
+                onCompleteAnimation?.Invoke();
+                return default;
             }
         }
 
-        private IDialogBox GetDialogBox<T>() where T : IDialogBox
+        private void OpenDialogInLayer(IDialogBox dialog, DialogLayer dialogLayer, float duration, Action onCompleteAnimation)
         {
-            return m_DialogBoxes.FirstOrDefault(b => b is T);
+            dialog.SortingLayer = dialogLayer;
+            dialog.Activate(true, duration, onCompleteAnimation);
+            m_FadeOverlay.SetActive(true);
+        }
+
+        private void CloseDialog(IDialogBox dialogBox, float duration, Action onCompleteAnimation)
+        {
+            dialogBox.Activate(false, duration, () =>
+            {
+                if (m_CountOfActiveDialogs == 0)
+                {
+                    m_FadeOverlay.SetActive(false);
+                }              
+                onCompleteAnimation?.Invoke();
+            });
+        }
+
+        private bool TryToGetDialog<T>(out T dialogBox) where T : IDialogBox
+        {
+            dialogBox = default;
+            var findedDialog = m_DialogBoxes.FirstOrDefault(b => b is T);
+            if (findedDialog != null)
+            {
+                dialogBox = (T)findedDialog;
+                return true;
+            }
+            Debug.Log($"There is no dialog {typeof(T)} in list!!!"); //ToDo advanced dbugger
+            return false;
+        }
+
+        private bool TryToGetOpenedDialogInLayer(DialogLayer dialogLayer, out IDialogBox dialogBox)
+        {
+            foreach (var dialog in m_DialogBoxes)
+            {
+                if (dialog.IsActive && dialog.SortingLayer == dialogLayer)
+                {
+                    dialogBox = dialog;
+                    return true;
+                }
+            }
+
+            dialogBox = default;
+            return false;
         }
 
         private void Awake()
