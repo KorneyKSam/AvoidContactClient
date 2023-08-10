@@ -1,8 +1,10 @@
 using Common;
-using Common.Data;
 using DialogBoxService;
 using Networking;
+using Networking.Sign;
+using Networking.Sign.Data;
 using System;
+using System.Collections;
 using UI.ViewModels;
 using UnityEngine;
 using UnityEngine.Events;
@@ -25,6 +27,8 @@ namespace UI.DialogBoxes
             add { m_AuthorizationViewModel.CancelButton.onClick.AddListener(value); }
             remove { m_AuthorizationViewModel.CancelButton.onClick.RemoveListener(value); }
         }
+
+        private const float CancelingDelayAfterSuccessAuthorization = 1.5f;
 
         [Inject]
         private DataService m_DataService;
@@ -85,7 +89,7 @@ namespace UI.DialogBoxes
         {
             m_AuthorizationViewModel.IsConnected = isConnected;
             m_AuthorizationViewModel.TooltipMessage = isConnected ? m_LastTooltipMessage :
-                                                      SignMessages.NoConnection;
+                                                      SignValidationMessages.NoConnection;
         }
 
         private void AddListeners()
@@ -107,21 +111,33 @@ namespace UI.DialogBoxes
             m_SignService.TryToSignIn(m_AuthorizationViewModel.Login, m_AuthorizationViewModel.Password, OnAuthorizationResult);
         }
 
-        private void OnAuthorizationResult(bool success)
-        {
-            m_LastTooltipMessage = success ? SignMessages.SuccessSign : SignMessages.WrongLoginOrPassword;
+        private void OnAuthorizationResult(SignInResult signInResult)
+        {                  
+            m_LastTooltipMessage = SignValidationMessages.SignInMessages[signInResult];
             m_AuthorizationViewModel.TooltipMessage = m_LastTooltipMessage;
 
-            if (success && m_AuthorizationViewModel.IsAutomaticAuthorization)
+            if (signInResult == SignInResult.Success)
+            {
+                m_AuthorizationViewModel.IsAuthorized = true;
+                StartCoroutine(InvokeCancel(CancelingDelayAfterSuccessAuthorization));
+            }
+
+            if (signInResult == SignInResult.Success || signInResult == SignInResult.AccountIsOccupied && m_AuthorizationViewModel.IsAutomaticAuthorization)
             {
                 UpdateDataByViewModel();
             }
-            else if (!success && m_AuthorizationViewModel.IsAutomaticAuthorization)
+            else if (signInResult != SignInResult.Success || signInResult != SignInResult.AccountIsOccupied && m_AuthorizationViewModel.IsAutomaticAuthorization)
             {
                 m_AuthorizationData.IsAutomaticAuthorization = false;
                 m_AuthorizationViewModel.IsAutomaticAuthorization = false;
             }
             m_DataService.Save(m_AuthorizationData);
+        }
+
+        private IEnumerator InvokeCancel(float dealy)
+        {
+            yield return new WaitForSeconds(dealy);
+            m_AuthorizationViewModel.CancelButton.onClick?.Invoke();
         }
 
         private void OnResetClick()

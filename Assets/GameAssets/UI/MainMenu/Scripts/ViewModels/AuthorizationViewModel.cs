@@ -45,7 +45,32 @@ namespace UI.ViewModels
         public bool IsConnected
         {
             get => m_IsConnected;
-            set => Set(ref m_IsConnected, value);
+            set
+            {
+                if (Set(ref m_IsConnected, value))
+                {
+                    OnPropertyChanged(nameof(IsAuthorizeButtonInteractable));
+                }
+            }
+        }
+
+        [Binding]
+        public bool IsAuthorized
+        {
+            get => m_IsAuthorized;
+            set
+            {
+                if (Set(ref m_IsAuthorized, value))
+                {
+                    OnPropertyChanged(nameof(IsAuthorizeButtonInteractable));
+                }
+            }
+        }
+
+        [Binding]
+        public bool IsAuthorizeButtonInteractable
+        {
+            get => m_IsConnected && !IsAuthorized;
         }
 
         [Header("Buttons")]
@@ -65,6 +90,7 @@ namespace UI.ViewModels
         private string m_Password;
         private string m_TooltipMessage;
         private bool m_IsConnected;
+        private bool m_IsAuthorized;
         private bool m_IsAutomaticAuthorization;
     }
 }

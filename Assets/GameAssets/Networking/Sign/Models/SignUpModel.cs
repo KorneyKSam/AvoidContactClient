@@ -1,6 +1,6 @@
 using System;
 
-namespace Networking
+namespace Networking.Sign
 {
     [Serializable]
     public class SignUpModel

@@ -1,6 +1,7 @@
 using Common;
 using DialogBoxService;
 using Networking;
+using Networking.Sign;
 using UI.ViewModels;
 using UnityEngine;
 using UnityWeld.Binding;
@@ -50,7 +51,7 @@ namespace UI.DialogBoxes
         {
             m_RegistrationViewModel.IsConnected = isConnected;
             m_RegistrationViewModel.TooltipMessage = isConnected ? m_LastTooltipMessage :
-                                                      SignMessages.NoConnection;
+                                                      SignValidationMessages.NoConnection;
         }
 
         private void AddListeners()
@@ -72,7 +73,7 @@ namespace UI.DialogBoxes
             m_SignService.TryToSignUp(m_RegistrationViewModel.GetSignUpModel(), OnRegistrationResult);
         }
 
-        private void OnRegistrationResult(bool success, string message)
+        private void OnRegistrationResult(SignUpResult signUpResult)
         {
 
         }

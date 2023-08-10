@@ -1,18 +1,22 @@
 using System;
+using UnityEngine;
 using Zenject;
 
-namespace Networking
+namespace Networking.Sign
 {
     public class SignService : IInitializable
     {
-        public bool IsLogedIn => m_IsLoggedIn;
+        public bool IsLogedIn => !string.IsNullOrEmpty(m_AuthorizationToken);
 
         [Inject]
-        private MessageSender m_MessageSender;
+        private SignMessageSender m_MessageSender;
 
-        private Action<bool> m_AuhtorizaitonCallback;
-        private Action<bool, string> m_RegistrationCallback;
-        private bool m_IsLoggedIn;
+        [Inject]
+        private IConnectorInfo m_ConnectorInfo;
+
+        private Action<SignInResult> m_AuhtorizaitonCallback;
+        private Action<SignUpResult> m_RegistrationCallback;
+        private string m_AuthorizationToken;
 
         ~SignService()
         {
@@ -21,41 +25,82 @@ namespace Networking
 
         public void Initialize()
         {
-            AddListeners();
+            AddListeners();           
         }
 
-        public void TryToSignIn(string login, string password, Action<bool> onResultCallback = null)
+        public void TryToSignIn(string login, string password, Action<SignInResult> onResultCallback = null)
         {
-            m_AuhtorizaitonCallback = onResultCallback;
-            m_MessageSender.SignIn(login, password);
+            if (m_ConnectorInfo.IsConnected && !IsLogedIn)
+            {
+                m_AuhtorizaitonCallback = onResultCallback;
+                m_MessageSender.SignIn(login, password);
+            }
         }
 
-        public void TryToSignUp(SignUpModel signUpModel, Action<bool, string> onResultCallback = null)
+        public void TryToSignUp(SignUpModel signUpModel, Action<SignUpResult> onResultCallback = null)
         {
 
+        }
+
+        public void SignOut()
+        {
+            if (IsLogedIn)
+            {
+                m_AuthorizationToken = string.Empty;
+                if (m_ConnectorInfo.IsConnected)
+                {
+                    m_MessageSender.SignOut();
+                }
+            }
+        }
+
+        public void LinkToken(string token)
+        {
+            if (m_ConnectorInfo.IsConnected)
+            {
+                m_MessageSender.LinkToken(token);
+            }
         }
 
         private void AddListeners()
         {
             SignMessageReceiver.OnSignInResultRecieve.AddListener(OnSignInReceiveResult);
             SignMessageReceiver.OnSignUpResultReceive.AddListener(OnSignUpReceiveResult);
+            m_ConnectorInfo.OnConnectionChanged += OnConnectionChanged;
         }
 
         private void RemoveListeners()
         {
             SignMessageReceiver.OnSignInResultRecieve.RemoveListener(OnSignInReceiveResult);
             SignMessageReceiver.OnSignUpResultReceive.RemoveListener(OnSignUpReceiveResult);
+            m_ConnectorInfo.OnConnectionChanged -= OnConnectionChanged;
         }
 
-        private void OnSignInReceiveResult(bool sucess)
+        private void OnSignInReceiveResult(SignInResult result, string authorizationToken)
         {
-            m_AuhtorizaitonCallback?.Invoke(sucess);
+            if (result == SignInResult.Success)
+            {
+                m_AuthorizationToken = authorizationToken;
+                LinkToken(m_AuthorizationToken);
+            }
+
+            m_AuhtorizaitonCallback?.Invoke(result);
             m_AuhtorizaitonCallback = null;
+            Debug.Log(result.ToString());
         }
-        private void OnSignUpReceiveResult(bool sucess, string message)
+
+        private void OnSignUpReceiveResult(SignUpResult result)
         {
-            m_RegistrationCallback?.Invoke(sucess, message);
+            m_RegistrationCallback?.Invoke(result);
             m_RegistrationCallback = null;
+        }
+
+        private void OnConnectionChanged(bool isConnected)
+        {
+            if (isConnected && IsLogedIn)
+            {
+                LinkToken(m_AuthorizationToken);
+            }
         }
     }
 }

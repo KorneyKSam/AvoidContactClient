@@ -1,5 +1,6 @@
 using Common;
 using Networking;
+using Networking.Sign;
 using Riptide;
 using SceneLoading;
 using UnityEngine;
@@ -37,7 +38,7 @@ public class GlobalInstaller : MonoInstaller
     private void BindNetworking()
     {
         Container.Bind<Client>().FromNew().AsSingle();
-        Container.Bind<MessageSender>().FromNew().AsSingle();
+        Container.Bind<SignMessageSender>().FromNew().AsSingle();
         var networkService = Container.InstantiatePrefabForComponent<ServerConnector>(m_ServerConnector, Vector2.zero, Quaternion.identity, null);
         Container.BindInterfacesAndSelfTo<ServerConnector>().FromInstance(networkService).AsSingle();
         Container.BindInterfacesAndSelfTo<SignService>().FromNew().AsSingle();

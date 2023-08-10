@@ -1,7 +1,8 @@
 using Common;
-using Common.Data;
 using DialogBoxService;
 using Networking;
+using Networking.Sign;
+using Networking.Sign.Data;
 using SceneLoading;
 using UI.DialogBoxes;
 using UnityEngine;
@@ -78,9 +79,9 @@ namespace UI
             if (authorizationData.IsAutomaticAuthorization)
             {
                 m_AuthorizationService.TryToSignIn(authorizationData.Login, authorizationData.Password,
-                (success) =>
+                (result) =>
                 {
-                    if (!success)
+                    if (result != SignInResult.Success || result != SignInResult.AccountIsOccupied)
                     {
                         authorizationData.IsAutomaticAuthorization = false;
                         m_DataService.Save(authorizationData);

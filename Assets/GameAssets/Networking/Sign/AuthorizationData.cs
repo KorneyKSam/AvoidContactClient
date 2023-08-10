@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using System;
 
-namespace Common.Data
+namespace Networking.Sign.Data
 {
     [Serializable]
     public class AuthorizationData

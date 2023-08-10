@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Networking
 {
-    public class ServerConnector : MonoBehaviour, IInitializable, IConnectorInfo
+    public class ServerConnector : MonoBehaviour, IInitializable, IConnectorInfo, IClientConnectInfo
     {
         public event Action<bool> OnConnectionChanged;
 
@@ -22,6 +22,7 @@ namespace Networking
             add { m_Client.ClientDisconnected += value; }
             remove { m_Client.ClientDisconnected -= value; }
         }
+
         public bool IsLoopedReconnection { get; set; }
 
         public bool IsConnected => m_Client.IsConnected;

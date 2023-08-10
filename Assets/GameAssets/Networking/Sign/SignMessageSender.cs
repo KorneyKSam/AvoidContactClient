@@ -1,9 +1,10 @@
 using Riptide;
+using UnityEngine;
 using Zenject;
 
-namespace Networking
+namespace Networking.Sign
 {
-    public class MessageSender
+    public class SignMessageSender
     {
         [Inject]
         private Client m_Client;
@@ -28,6 +29,13 @@ namespace Networking
         public void SignOut()
         {
             var message = Message.Create(MessageSendMode.Reliable, (ushort)ClientCommands.SignOut);
+            m_Client.Send(message);
+        }
+
+        public void LinkToken(string authorizationToken)
+        {
+            var message = Message.Create(MessageSendMode.Reliable, (ushort)ClientCommands.LinkToken);
+            message.AddString(authorizationToken);
             m_Client.Send(message);
         }
     }

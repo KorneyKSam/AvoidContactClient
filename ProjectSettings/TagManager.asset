@@ -44,6 +44,12 @@ TagManager:
   - name: UI
     uniqueID: 1825752493
     locked: 0
-  - name: UIDialog
+  - name: UIDialog1
     uniqueID: 2777300529
+    locked: 0
+  - name: UIDialog2
+    uniqueID: 1278677017
+    locked: 0
+  - name: UIDialog3
+    uniqueID: 2345648047
     locked: 0

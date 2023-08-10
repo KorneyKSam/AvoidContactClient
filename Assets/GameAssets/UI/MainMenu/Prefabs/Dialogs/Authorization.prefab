@@ -2072,7 +2072,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewAdapterTypeName: 
   viewAdapterOptions: {fileID: 0}
-  viewModelPropertyName: UI.ViewModels.AuthorizationViewModel.IsConnected
+  viewModelPropertyName: UI.ViewModels.AuthorizationViewModel.IsAuthorizeButtonInteractable
   viewPropertyName: UnityEngine.UI.Button.interactable
 --- !u!114 &2670189136056174814 stripped
 MonoBehaviour:
