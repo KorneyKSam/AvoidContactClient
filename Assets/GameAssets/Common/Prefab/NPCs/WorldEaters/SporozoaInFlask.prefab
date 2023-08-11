@@ -57,7 +57,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1169635150429944582}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.1000366, y: -20.100037, z: 0}
+  m_LocalPosition: {x: 2.1000366, y: -20.10004, z: 0}
   m_LocalScale: {x: 11.144293, y: 11.144293, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -143,8 +143,8 @@ MonoBehaviour:
   - {fileID: 7438110930852194494}
   - {fileID: 8050459176258660170}
   m_Bounds:
-    m_Center: {x: -1.982893, y: -4.70162, z: 0}
-    m_Extent: {x: 6.960867, y: 6.1971073, z: 0}
+    m_Center: {x: -1.8676448, y: -0.6845274, z: 0}
+    m_Extent: {x: 4.591174, y: 8.368096, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -222,8 +222,9 @@ GameObject:
   - component: {fileID: 1290901581142167635}
   - component: {fileID: 6735618482290791520}
   - component: {fileID: 4988952884327915966}
+  - component: {fileID: 3168104600678923730}
   m_Layer: 5
-  m_Name: SomethingInFlask
+  m_Name: SporozoaInFlask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -280,6 +281,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3168104600678923730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2747066726885265325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4c29b8a8383de142bae19cbda6558ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Animator: {fileID: 4988952884327915966}
 --- !u!1 &3468151201016180995
 GameObject:
   m_ObjectHideFlags: 0
@@ -700,7 +714,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8653785293092902132}
   m_LocalRotation: {x: 0, y: 0, z: 0.755454, w: 0.6552017}
-  m_LocalPosition: {x: 0.17658204, y: -2.3581648, z: 0}
+  m_LocalPosition: {x: 0.176582, y: -2.3581648, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

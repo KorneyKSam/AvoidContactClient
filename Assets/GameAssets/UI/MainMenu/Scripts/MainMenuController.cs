@@ -1,8 +1,10 @@
 using Common;
+using Common.Animation;
 using DialogBoxService;
 using Networking;
 using Networking.Sign;
 using Networking.Sign.Data;
+using NPCs.Sporozoa;
 using SceneLoading;
 using UI.DialogBoxes;
 using UnityEngine;
@@ -14,6 +16,10 @@ namespace UI
     public class MainMenuController : MonoBehaviour, IInitializable
     {
         private const int FakeLoadingMilliseconds = 2000;
+
+        [Header("Decorations")]
+        [SerializeField]
+        private AnimatedSprite m_AnimatedSporozoa;
 
         [Header("Buttons")]
         [SerializeField]
@@ -46,11 +52,15 @@ namespace UI
         [Inject]
         private DataService m_DataService;
 
+        private SporozoaInFlaskBehaviour m_SporozoaInFlaskBehaviour;
+
         public void Initialize()
         {
             m_FakeLoader.ShowFakeLoadAnimation(FakeLoadingMilliseconds, allowActivation: false, useResumeButton: false);
             TryToConnectToServer();
             AddMainMenuListeners();
+            m_SporozoaInFlaskBehaviour = new SporozoaInFlaskBehaviour(m_AnimatedSporozoa);
+            m_SporozoaInFlaskBehaviour.SetState(SporozoaInFlaskState.Calm);
         }
 
         private void TryToConnectToServer()
