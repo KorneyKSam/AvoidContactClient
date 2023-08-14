@@ -10,6 +10,7 @@ using UI.DialogBoxes;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
+using Decorations;
 
 namespace UI
 {
@@ -20,6 +21,9 @@ namespace UI
         [Header("Decorations")]
         [SerializeField]
         private AnimatedSprite m_AnimatedSporozoa;
+
+        [SerializeField]
+        private TableLamp m_TableLamp;
 
         [Header("Buttons")]
         [SerializeField]
@@ -59,8 +63,7 @@ namespace UI
             m_FakeLoader.ShowFakeLoadAnimation(FakeLoadingMilliseconds, allowActivation: false, useResumeButton: false);
             TryToConnectToServer();
             AddMainMenuListeners();
-            m_SporozoaInFlaskBehaviour = new SporozoaInFlaskBehaviour(m_AnimatedSporozoa);
-            m_SporozoaInFlaskBehaviour.SetState(SporozoaInFlaskState.Calm);
+            m_SporozoaInFlaskBehaviour = new SporozoaInFlaskBehaviour(m_AnimatedSporozoa, m_TableLamp);
         }
 
         private void TryToConnectToServer()
