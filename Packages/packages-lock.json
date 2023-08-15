@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.noone.advanced-debugger": {
+      "version": "https://github.com/KorneyKSam/AdvancedDebugger.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "e54eec20cd5a5c93308bfdc20587089a9dc0aaf1"
+    },
     "com.unity.2d.animation": {
       "version": "7.0.9",
       "depth": 1,
