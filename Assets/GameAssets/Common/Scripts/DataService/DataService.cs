@@ -1,6 +1,8 @@
+using AdvancedDebugger;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
+using Tools.Debugging;
 using UnityEngine;
 
 namespace Common
@@ -43,7 +45,7 @@ namespace Common
                 }
                 catch (JsonReaderException exception)
                 {
-                    //ToDo advanced Debug log
+                    Debugger.Log(exception.Message, DebuggerLog.Error);
                     Remove<T>();
                 }
             }

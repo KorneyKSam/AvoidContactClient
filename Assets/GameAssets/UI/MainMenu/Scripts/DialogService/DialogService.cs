@@ -1,7 +1,9 @@
+using AdvancedDebugger;
 using GOOfTpeAttribute;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tools.Debugging;
 using UnityEngine;
 
 namespace DialogBoxService
@@ -35,7 +37,7 @@ namespace DialogBoxService
             {
                 if (foundedDialog.IsActive)
                 {
-                    Debug.Log($"Dialog {typeof(T)} is already opened!"); //ToDo advanced dbugger
+                    Debugger.Log($"Dialog {typeof(T)} is already opened!", DebuggerLog.InfoWarning);
                 }
                 else
                 {
@@ -70,7 +72,7 @@ namespace DialogBoxService
                 }
                 else
                 {
-                    Debug.Log($"Attempting to close dialog {typeof(T)}! Dialog is not opened!"); //ToDo Advanced debugger
+                    Debugger.Log($"Attempting to close dialog {typeof(T)}! Dialog is not opened!", DebuggerLog.InfoWarning);
                 }
                 return foundedDialog;
             }
@@ -109,7 +111,7 @@ namespace DialogBoxService
                 dialogBox = (T)findedDialog;
                 return true;
             }
-            Debug.Log($"There is no dialog {typeof(T)} in list!!!"); //ToDo advanced dbugger
+            Debugger.Log($"There is no dialog {typeof(T)} in list!!!", DebuggerLog.InfoWarning);
             return false;
         }
 

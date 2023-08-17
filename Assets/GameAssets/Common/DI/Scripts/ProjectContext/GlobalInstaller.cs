@@ -3,6 +3,7 @@ using Networking;
 using Networking.Sign;
 using Riptide;
 using SceneLoading;
+using Tools.Debugging;
 using UnityEngine;
 using Zenject;
 
@@ -16,6 +17,7 @@ public class GlobalInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
+        DebuggerInitializer.Initialize();
         BindData();
         BindSceneLoading();
         BindNetworking();

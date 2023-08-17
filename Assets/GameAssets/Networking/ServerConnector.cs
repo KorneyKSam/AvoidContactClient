@@ -1,7 +1,9 @@
+using AdvancedDebugger;
 using Riptide;
 using Riptide.Utils;
 using System;
 using System.Collections.Generic;
+using Tools.Debugging;
 using UnityEngine;
 using Zenject;
 
@@ -44,7 +46,10 @@ namespace Networking
 
         public void Initialize()
         {
-            RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
+            RiptideLogger.Initialize((message) => Debugger.Log(message, DebuggerLog.Debug),
+                                     (message) => Debugger.Log(message, DebuggerLog.InfoDebug),
+                                     (message) => Debugger.Log(message, DebuggerLog.Warning),
+                                     (message) => Debugger.Log(message, DebuggerLog.Error), false);
             AddHandlers();
         }
 
