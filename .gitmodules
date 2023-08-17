@@ -1,0 +1,3 @@
+[submodule "Assets/AvoidContactCommon"]
+	path = Assets/AvoidContactCommon
+	url = git@github.com:KorneyKSam/AvoidContactCommon.git
