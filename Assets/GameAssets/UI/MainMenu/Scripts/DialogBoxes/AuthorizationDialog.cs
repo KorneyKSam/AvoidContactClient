@@ -60,7 +60,6 @@ namespace UI.DialogBoxes
             else
             {
                 RemoveListeners();
-                m_ServerConnectorUI.RemoveConnectionListener(m_AuthorizationViewModel);
             }
 
             base.Activate(isActive, duration, onCompleteAnimation);

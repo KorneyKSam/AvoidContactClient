@@ -1,4 +1,6 @@
+using AdvancedDebugger;
 using System;
+using Tools.Debugging;
 using UnityEngine;
 using Zenject;
 
@@ -86,7 +88,7 @@ namespace Networking.Sign
 
             m_AuhtorizaitonCallback?.Invoke(result);
             m_AuhtorizaitonCallback = null;
-            Debug.Log(result.ToString());
+            Debugger.Log(result.ToString(), DebuggerLog.InfoDebug);
         }
 
         private void OnSignUpReceiveResult(SignUpResult result)

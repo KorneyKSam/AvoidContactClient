@@ -27,6 +27,7 @@ namespace MyNamespace
         public void AddConnectionListener(INetworkConnectionViewModel networkConnectionViewModel)
         {
             m_NetworkListeners.Add(networkConnectionViewModel);
+            networkConnectionViewModel.IsConnected = m_ServerConnector.IsConnected;
             UpdateReconnectionStatus();
         }
 
@@ -55,7 +56,7 @@ namespace MyNamespace
         {
             m_ServerConnector.IsLoopedReconnection = m_NetworkListeners.Count > 0;
 
-            if (!m_ServerConnector.IsConnected)
+            if (m_ServerConnector.IsLoopedReconnection && !m_ServerConnector.IsConnected)
             {
                 m_ServerConnector.Connect();
             }
