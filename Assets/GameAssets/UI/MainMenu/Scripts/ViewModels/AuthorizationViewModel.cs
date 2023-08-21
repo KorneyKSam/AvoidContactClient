@@ -6,7 +6,7 @@ using UnityWeld.Binding;
 namespace UI.ViewModels
 {
     [Binding]
-    public class AuthorizationViewModel : BaseMonoPropertyChanged
+    public class AuthorizationViewModel : BaseMonoPropertyChanged, INetworkConnectionViewModel
     {
         public Button AuthorizationButton => m_AuthorizationBtn;
         public Button CancelButton => m_CancelBtn;

@@ -3,7 +3,7 @@ using System;
 namespace Networking.Sign
 {
     [Serializable]
-    public class SignUpModel
+    public class SignUpInfo
     {
         public string Login { get; set; }
         public string Password { get; set; }

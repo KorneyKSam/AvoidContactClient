@@ -1,6 +1,4 @@
 using MVVM;
-using Networking;
-using Networking.Sign;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityWeld.Binding;
@@ -8,7 +6,7 @@ using UnityWeld.Binding;
 namespace UI.ViewModels
 {
     [Binding]
-    public class RegistrationViewModel : BaseMonoPropertyChanged
+    public class RegistrationViewModel : BaseMonoPropertyChanged, INetworkConnectionViewModel
     {
         public Button RegistrationBtn => m_RegistrationBtn;
         public Button CancelRegistration => m_CancelRegistration;
@@ -53,16 +51,6 @@ namespace UI.ViewModels
         {
             get => m_IsConnected;
             set => Set(ref m_IsConnected, value);
-        }
-
-        public SignUpModel GetSignUpModel()
-        {
-            return new SignUpModel()
-            {
-                Login = m_Login,
-                Password = Password,
-                Email = Email,
-            };
         }
 
         [SerializeField]

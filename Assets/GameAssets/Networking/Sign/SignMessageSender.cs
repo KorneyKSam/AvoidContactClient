@@ -17,7 +17,7 @@ namespace Networking.Sign
             m_Client.Send(message);
         }
 
-        public void SignUp(SignUpModel signUpModel)
+        public void SignUp(SignUpInfo signUpModel)
         {
             var message = Message.Create(MessageSendMode.Reliable, (ushort)ClientCommands.SignUp);
             message.AddString(signUpModel.Login);

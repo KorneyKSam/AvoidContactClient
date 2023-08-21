@@ -1,4 +1,5 @@
 using Common;
+using MyNamespace;
 using Networking;
 using Networking.Sign;
 using Riptide;
@@ -44,6 +45,7 @@ public class GlobalInstaller : MonoInstaller
         var networkService = Container.InstantiatePrefabForComponent<ServerConnector>(m_ServerConnector, Vector2.zero, Quaternion.identity, null);
         Container.BindInterfacesAndSelfTo<ServerConnector>().FromInstance(networkService).AsSingle();
         Container.BindInterfacesAndSelfTo<SignService>().FromNew().AsSingle();
+        Container.Bind<ServerConnectorUI>().FromNew().AsSingle();
     }
 
     private T InstantiateWithDefaultValues<T>(T prefab) where T : MonoBehaviour

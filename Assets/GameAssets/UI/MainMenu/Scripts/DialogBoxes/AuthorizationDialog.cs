@@ -1,5 +1,6 @@
 using Common;
 using DialogBoxService;
+using MyNamespace;
 using Networking;
 using Networking.Sign;
 using Networking.Sign.Data;
@@ -34,41 +35,42 @@ namespace UI.DialogBoxes
         private DataService m_DataService;
 
         [Inject]
-        private ServerConnector m_ServerConnector;
+        private SignService m_SignService;
 
         [Inject]
-        private SignService m_SignService;
+        private ServerConnectorUI m_ServerConnectorUI;
 
         [SerializeField]
         private AuthorizationViewModel m_AuthorizationViewModel;
 
         private AuthorizationData m_AuthorizationData;
 
-        private string m_LastTooltipMessage;
-
         public override void Activate(bool isActive, float duration, Action onCompleteAnimation = null)
         {
-            UpdateView();
+            if (IsActive == isActive)
+            {
+                return;
+            }
 
-            RemoveListeners();
-            m_ServerConnector.IsLoopedReconnection = isActive;
             if (isActive)
             {
-                AddListeners();
-                if (!m_ServerConnector.IsConnected)
-                {
-                    m_ServerConnector.Connect();
-                }
+                UpdateView();
+                AddListeners();           
+            }
+            else
+            {
+                RemoveListeners();
+                m_ServerConnectorUI.RemoveConnectionListener(m_AuthorizationViewModel);
             }
 
             base.Activate(isActive, duration, onCompleteAnimation);
         }
 
+
         private void UpdateView()
         {
             m_AuthorizationData = m_DataService.Load<AuthorizationData>();
             UpdateViewModelByData();
-            UpdateConnectStatusView(m_ServerConnector.IsConnected);
         }
 
         private void UpdateViewModelByData()
@@ -85,25 +87,19 @@ namespace UI.DialogBoxes
             m_AuthorizationData.IsAutomaticAuthorization = m_AuthorizationViewModel.IsAutomaticAuthorization;
         }
 
-        private void UpdateConnectStatusView(bool isConnected)
-        {
-            m_AuthorizationViewModel.IsConnected = isConnected;
-            m_AuthorizationViewModel.TooltipMessage = isConnected ? m_LastTooltipMessage :
-                                                      SignValidationMessages.NoConnection;
-        }
-
         private void AddListeners()
         {
+            RemoveListeners();
             m_AuthorizationViewModel.AuthorizationButton.onClick.AddListener(OnAuthorizationClick);
             m_AuthorizationViewModel.ResetPasswordBtn.onClick.AddListener(OnResetClick);
-            m_ServerConnector.OnConnectionChanged += UpdateConnectStatusView;
+            m_ServerConnectorUI.AddConnectionListener(m_AuthorizationViewModel);
         }
 
         private void RemoveListeners()
         {
             m_AuthorizationViewModel.AuthorizationButton.onClick.RemoveListener(OnAuthorizationClick);
             m_AuthorizationViewModel.ResetPasswordBtn.onClick.RemoveListener(OnResetClick);
-            m_ServerConnector.OnConnectionChanged -= UpdateConnectStatusView;
+            m_ServerConnectorUI.RemoveConnectionListener(m_AuthorizationViewModel);
         }
 
         private void OnAuthorizationClick()
@@ -112,9 +108,8 @@ namespace UI.DialogBoxes
         }
 
         private void OnAuthorizationResult(SignInResult signInResult)
-        {                  
-            m_LastTooltipMessage = SignValidationMessages.SignInMessages[signInResult];
-            m_AuthorizationViewModel.TooltipMessage = m_LastTooltipMessage;
+        {
+            m_AuthorizationViewModel.TooltipMessage = SignValidationMessages.SignInMessages[signInResult];
 
             if (signInResult == SignInResult.Success)
             {

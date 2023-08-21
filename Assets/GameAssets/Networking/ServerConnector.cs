@@ -12,6 +12,7 @@ namespace Networking
     public class ServerConnector : MonoBehaviour, IInitializable, IConnectorInfo, IClientConnectInfo
     {
         public event Action<bool> OnConnectionChanged;
+        public event Action<bool> OnConnectionResult;
 
         public event EventHandler<ClientConnectedEventArgs> OnClientConnected
         {
@@ -41,7 +42,6 @@ namespace Networking
         private Client m_Client;
 
         private List<int> m_ConnectedPlayerIDs = new();
-        private Action<bool> m_OnConnectionResultCallback;
         private bool m_IsConnecting;
 
         public void Initialize()
@@ -53,13 +53,12 @@ namespace Networking
             AddHandlers();
         }
 
-        public void Connect(Action<bool> resultCallback = null)
+        public void Connect()
         {
             if (!m_IsConnecting)
             {
                 m_IsConnecting = true;
                 m_Client.Connect($"{m_Ip}:{m_Port}");
-                m_OnConnectionResultCallback = resultCallback;
             }
         }
 
@@ -84,21 +83,20 @@ namespace Networking
         private void ConnectionHandler(object sender, EventArgs e)
         {
             m_IsConnecting = false;
-            InvokeCallback(true);
             OnConnectionChanged?.Invoke(true);
+            OnConnectionResult?.Invoke(true);
         }
 
         private void DisconnectedHandler(object sender, DisconnectedEventArgs e)
         {
-            InvokeCallback(false);
             OnConnectionChanged?.Invoke(false);
             TryToReconnect();
         }
 
         private void ConnectionFailedHandler(object sender, ConnectionFailedEventArgs e)
         {
+            OnConnectionResult?.Invoke(false);
             m_IsConnecting = false;
-            InvokeCallback(false);
             TryToReconnect();
         }
 
@@ -134,12 +132,6 @@ namespace Networking
         private void OnApplicationQuit()
         {
             m_Client.Disconnect();
-        }
-
-        private void InvokeCallback(bool result)
-        {
-            m_OnConnectionResultCallback?.Invoke(result);
-            m_OnConnectionResultCallback = null;
         }
     }
 }

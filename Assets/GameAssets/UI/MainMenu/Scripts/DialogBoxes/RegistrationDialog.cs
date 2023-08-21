@@ -4,6 +4,7 @@ using Networking;
 using Networking.Sign;
 using UI.ViewModels;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityWeld.Binding;
 using Zenject;
 
@@ -12,6 +13,12 @@ namespace UI.DialogBoxes
     [Binding]
     public class RegistrationDialog : ZoomedDialog
     {
+        public event UnityAction OnCancelClick
+        {
+            add { m_RegistrationViewModel.CancelRegistration.onClick.AddListener(value); }
+            remove { m_RegistrationViewModel.CancelRegistration.onClick.RemoveListener(value); }
+        }
+
         [Inject]
         private DataService m_DataService;
 
@@ -57,20 +64,18 @@ namespace UI.DialogBoxes
         private void AddListeners()
         {
             m_RegistrationViewModel.RegistrationBtn.onClick.AddListener(OnRegistrationClick);
-            m_RegistrationViewModel.CancelRegistration.onClick.AddListener(OnCancelClick);
             m_ServerConnector.OnConnectionChanged += UpdateConnectStatusView;
         }
 
         private void RemoveListeners()
         {
             m_RegistrationViewModel.RegistrationBtn.onClick.RemoveListener(OnRegistrationClick);
-            m_RegistrationViewModel.CancelRegistration.onClick.RemoveListener(OnCancelClick);
             m_ServerConnector.OnConnectionChanged -= UpdateConnectStatusView;
         }
 
         private void OnRegistrationClick()
         {
-            m_SignService.TryToSignUp(m_RegistrationViewModel.GetSignUpModel(), OnRegistrationResult);
+            m_SignService.TryToSignUp(GetSignUpInfo(), OnRegistrationResult);
         }
 
         private void OnRegistrationResult(SignUpResult signUpResult)
@@ -78,9 +83,14 @@ namespace UI.DialogBoxes
 
         }
 
-        private void OnCancelClick()
+        private SignUpInfo GetSignUpInfo()
         {
-
+            return new SignUpInfo()
+            {
+                Login = m_RegistrationViewModel.Login,
+                Email = m_RegistrationViewModel.Email,
+                Password = m_RegistrationViewModel.Password
+            };
         }
     }
 }

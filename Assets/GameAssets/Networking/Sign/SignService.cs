@@ -37,7 +37,7 @@ namespace Networking.Sign
             }
         }
 
-        public void TryToSignUp(SignUpModel signUpModel, Action<SignUpResult> onResultCallback = null)
+        public void TryToSignUp(SignUpInfo signUpModel, Action<SignUpResult> onResultCallback = null)
         {
 
         }

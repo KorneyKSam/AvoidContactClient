@@ -70,14 +70,8 @@ namespace UI
         {
             if (!m_ServerConnector.IsConnected)
             {
-                m_ServerConnector.Connect((isConnected) =>
-                {
-                    m_FakeLoader.AllowActivation(true);
-                    if (isConnected)
-                    {
-                        TryToAuthorizate();
-                    }
-                });
+                m_ServerConnector.OnConnectionResult += TryToAuthorizate;
+                m_ServerConnector.Connect();
             }
             else
             {
@@ -85,21 +79,27 @@ namespace UI
             }
         }
 
-        private void TryToAuthorizate()
+        private void TryToAuthorizate(bool isConnected)
         {
-            var authorizationData = m_DataService.Load<AuthorizationData>();
+            m_ServerConnector.OnConnectionResult -= TryToAuthorizate;
+            m_FakeLoader.AllowActivation(true);
 
-            if (authorizationData.IsAutomaticAuthorization)
+            if (isConnected)
             {
-                m_AuthorizationService.TryToSignIn(authorizationData.Login, authorizationData.Password,
-                (result) =>
+                var authorizationData = m_DataService.Load<AuthorizationData>();
+
+                if (authorizationData.IsAutomaticAuthorization)
                 {
-                    if (result != SignInResult.Success || result != SignInResult.AccountIsOccupied)
+                    m_AuthorizationService.TryToSignIn(authorizationData.Login, authorizationData.Password,
+                    (result) =>
                     {
-                        authorizationData.IsAutomaticAuthorization = false;
-                        m_DataService.Save(authorizationData);
-                    }
-                });
+                        if (result != SignInResult.Success || result != SignInResult.AccountIsOccupied)
+                        {
+                            authorizationData.IsAutomaticAuthorization = false;
+                            m_DataService.Save(authorizationData);
+                        }
+                    });
+                }
             }
         }
 
