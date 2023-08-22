@@ -47,11 +47,6 @@ namespace UI.DialogBoxes
 
         public override void Activate(bool isActive, float duration, Action onCompleteAnimation = null)
         {
-            if (IsActive == isActive)
-            {
-                return;
-            }
-
             if (isActive)
             {
                 UpdateView();

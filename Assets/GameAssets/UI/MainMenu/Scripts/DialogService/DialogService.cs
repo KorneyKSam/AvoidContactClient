@@ -3,7 +3,6 @@ using GOOfTpeAttribute;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Tools.Debugging;
 using UnityEngine;
 
 namespace DialogBoxService
@@ -24,14 +23,14 @@ namespace DialogBoxService
         private int m_CountOfActiveDialogs => m_DialogBoxes.Count(d => d.IsActive);
 
         /// <summary>
-        /// Open dialog in layer with duration.
+        /// Open dialog in layer.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="dialogLayer">Opening different dialogs in one layer is not possible, old dialog will be closed.</param>
         /// <param name="duration"></param>
         /// <param name="onCompleteAnimation">A callback that will be called when animation will be fully completed.</param>
         /// <returns></returns>
-        public T Open<T>(DialogLayer dialogLayer = DialogLayer.UIDialog1, float duration = m_DefaultDuration, Action onCompleteAnimation = null) where T : IDialogBox
+        public T Open<T>(Action onCompleteAnimation = null, DialogLayer dialogLayer = DialogLayer.UIDialog1, float duration = m_DefaultDuration) where T : IDialogBox
         {
             if (TryToGetDialog<T>(out var foundedDialog))
             {
@@ -111,7 +110,7 @@ namespace DialogBoxService
                 dialogBox = (T)findedDialog;
                 return true;
             }
-            Debugger.Log($"There is no dialog {typeof(T)} in list!!!", DebuggerLog.InfoWarning);
+            Debugger.Log($"There is no dialog «{typeof(T).Name}» in list!!! Please add Dialog in Dialog Service!", DebuggerLog.InfoWarning);
             return false;
         }
 
@@ -132,12 +131,19 @@ namespace DialogBoxService
 
         private void Awake()
         {
+            InitializeDialogBoxes();
+        }
+
+        private void InitializeDialogBoxes()
+        {
             if (m_GODialogBoxes != null)
             {
                 m_GODialogBoxes.ForEach(b =>
                 {
-                    m_DialogBoxes.Add(b.GetComponent<IDialogBox>());
                     b.transform.localScale = Vector3.zero;
+                    var dialogBox = b.GetComponent<IDialogBox>();
+                    dialogBox.Init();
+                    m_DialogBoxes.Add(dialogBox);
                 });
             }
         }

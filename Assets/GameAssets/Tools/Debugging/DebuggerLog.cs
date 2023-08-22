@@ -1,4 +1,4 @@
-namespace Tools.Debugging
+namespace AdvancedDebugger
 {
     public static class DebuggerLog
     {

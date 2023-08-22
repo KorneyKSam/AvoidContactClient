@@ -8,5 +8,6 @@ namespace DialogBoxService
         public DialogLayer SortingLayer { get; set; }
 
         public void Activate(bool isActive, float duration, Action onCompleteAnimation = null);
+        public void Init();
     }
 }

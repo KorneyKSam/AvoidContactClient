@@ -23,6 +23,7 @@ namespace DialogBoxService
         private DialogLayer m_SortingLayer;
         private Canvas m_Canvas;
 
+        public virtual void Init() { }
         public abstract void Activate(bool isActive, float duration, Action onCompleteAnimation = null);
 
         private void OnValidate()

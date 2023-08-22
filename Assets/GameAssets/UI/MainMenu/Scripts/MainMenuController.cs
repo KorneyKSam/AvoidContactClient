@@ -1,5 +1,7 @@
+using AdvancedDebugger;
 using Common;
 using Common.Animation;
+using Decorations;
 using DialogBoxService;
 using Networking;
 using Networking.Sign;
@@ -10,7 +12,6 @@ using UI.DialogBoxes;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
-using Decorations;
 
 namespace UI
 {
@@ -57,6 +58,7 @@ namespace UI
         private DataService m_DataService;
 
         private SporozoaInFlaskBehaviour m_SporozoaInFlaskBehaviour;
+        private PersonalFileDialog m_PersonalFileDialog;
 
         public void Initialize()
         {
@@ -87,7 +89,7 @@ namespace UI
             if (isConnected)
             {
                 var authorizationData = m_DataService.Load<AuthorizationData>();
-
+                Debugger.Log($"Automatic authorization: {authorizationData.IsAutomaticAuthorization}", DebuggerLog.InfoDebug);
                 if (authorizationData.IsAutomaticAuthorization)
                 {
                     m_AuthorizationService.TryToSignIn(authorizationData.Login, authorizationData.Password,
@@ -165,12 +167,24 @@ namespace UI
 
         private void ShowRegistrationPanel()
         {
-            m_DialogService.Open<RegistrationDialog>();
+            m_PersonalFileDialog = m_DialogService.Open<PersonalFileDialog>(() =>
+            {
+                m_PersonalFileDialog.MoveSheet(PersonalFileSheet.Registration, FileSide.Left);
+            });
+
+            AddPersonalFileListeners();
+            m_PersonalFileDialog.ActivateFileSheets(isActive: true, PersonalFileSheet.Registration, PersonalFileSheet.PlayerInfo);
         }
 
-        private void OnRegistrationCancel()
+        private void AddPersonalFileListeners()
         {
-            m_DialogService.Close<RegistrationDialog>();
+            m_PersonalFileDialog.OnCancelClick += OnPersonalFileCancel;
+        }
+
+        private void OnPersonalFileCancel()
+        {
+            m_PersonalFileDialog.OnCancelClick -= OnPersonalFileCancel;
+            m_DialogService.Close<PersonalFileDialog>().OnCancelClick -= OnPersonalFileCancel;
         }
 
         private ConfirmationDialogInfo GetConfirmationInfo(ConfirmationDialogType confirmationPopupType)

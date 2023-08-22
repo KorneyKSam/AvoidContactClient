@@ -9,7 +9,7 @@ using Zenject;
 namespace UI.ViewModels
 {
     [Binding]
-    public class RegistrationViewModel : BaseMonoPropertyChanged, INetworkConnectionViewModel
+    public class PlayerInfoViewModel : BaseMonoPropertyChanged, INetworkConnectionViewModel
     {
         public Button RegistrationBtn => m_RegistrationBtn;
         public Button CancelRegistration => m_CancelRegistration;
@@ -67,16 +67,6 @@ namespace UI.ViewModels
 
         [Inject]
         private SignService m_SignService;
-
-        public void OnEnable()
-        {
-            AddListeners();
-        }
-
-        public void OnDisable()
-        {
-            RemoveListeners();
-        }
 
         private void AddListeners()
         {
