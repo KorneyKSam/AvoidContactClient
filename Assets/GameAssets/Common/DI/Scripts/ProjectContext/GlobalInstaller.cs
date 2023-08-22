@@ -44,7 +44,7 @@ public class GlobalInstaller : MonoInstaller
         Container.Bind<SignMessageSender>().FromNew().AsSingle();
         var networkService = Container.InstantiatePrefabForComponent<ServerConnector>(m_ServerConnector, Vector2.zero, Quaternion.identity, null);
         Container.BindInterfacesAndSelfTo<ServerConnector>().FromInstance(networkService).AsSingle();
-        Container.BindInterfacesAndSelfTo<SignService>().FromNew().AsSingle();
+        Container.Bind<SignService>().FromNew().AsSingle();
         Container.Bind<ServerConnectorUI>().FromNew().AsSingle();
     }
 

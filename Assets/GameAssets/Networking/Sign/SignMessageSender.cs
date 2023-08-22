@@ -1,5 +1,5 @@
+using AvoidContactCommon.Sign;
 using Riptide;
-using UnityEngine;
 using Zenject;
 
 namespace Networking.Sign
@@ -17,12 +17,12 @@ namespace Networking.Sign
             m_Client.Send(message);
         }
 
-        public void SignUp(SignUpInfo signUpModel)
+        public void SignUp(SignedPlayerInfo signedPlayerInfo)
         {
             var message = Message.Create(MessageSendMode.Reliable, (ushort)ClientCommands.SignUp);
-            message.AddString(signUpModel.Login);
-            message.AddString(signUpModel.Password);
-            message.AddString(signUpModel.Email);
+            message.AddString(signedPlayerInfo.Login);
+            message.AddString(signedPlayerInfo.Password);
+            message.AddString(signedPlayerInfo.Email);
             m_Client.Send(message);
         }
 

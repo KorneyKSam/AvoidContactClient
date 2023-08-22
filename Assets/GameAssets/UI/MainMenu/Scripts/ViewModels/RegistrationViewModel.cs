@@ -1,3 +1,5 @@
+using AvoidContactCommon.Sign;
+using AvoidContactCommon.Validation;
 using MVVM;
 using MyNamespace;
 using Networking.Sign;
@@ -100,9 +102,9 @@ namespace UI.ViewModels
 
         }
 
-        private SignUpInfo GetSignUpInfo()
+        private SignedPlayerInfo GetSignUpInfo()
         {
-            return new SignUpInfo()
+            return new SignedPlayerInfo()
             {
                 Login = Login,
                 Email = Email,

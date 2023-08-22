@@ -200,10 +200,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5ffe3e1e7714994d822d3cb8b7c4354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MainMenuController: {fileID: 1697469646}
-  m_DialogService: {fileID: 1697469648}
-  m_CameraController: {fileID: 1697469647}
---- !u!1001 &1697469645
+  m_MainMenuController: {fileID: 1446808336}
+  m_DialogService: {fileID: 1446808338}
+  m_CameraController: {fileID: 1446808337}
+--- !u!1001 &1446808335
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -290,19 +290,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4455340532376284446, guid: af634137e35aeaa4ba5fb6052294171c, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5934359387239718854, guid: af634137e35aeaa4ba5fb6052294171c, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6039488545886371194, guid: af634137e35aeaa4ba5fb6052294171c, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6082429184027792616, guid: af634137e35aeaa4ba5fb6052294171c, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
@@ -324,10 +316,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af634137e35aeaa4ba5fb6052294171c, type: 3}
---- !u!114 &1697469646 stripped
+--- !u!114 &1446808336 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6802962028549386026, guid: af634137e35aeaa4ba5fb6052294171c, type: 3}
-  m_PrefabInstance: {fileID: 1697469645}
+  m_PrefabInstance: {fileID: 1446808335}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -335,10 +327,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7614a44afd6d0314aac1cd2953019f1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1697469647 stripped
+--- !u!114 &1446808337 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4727480057990661356, guid: af634137e35aeaa4ba5fb6052294171c, type: 3}
-  m_PrefabInstance: {fileID: 1697469645}
+  m_PrefabInstance: {fileID: 1446808335}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -346,10 +338,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fff344061437544286f89f4be089bbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1697469648 stripped
+--- !u!114 &1446808338 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8365201213248035647, guid: af634137e35aeaa4ba5fb6052294171c, type: 3}
-  m_PrefabInstance: {fileID: 1697469645}
+  m_PrefabInstance: {fileID: 1446808335}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1

@@ -70,34 +70,12 @@ namespace UI.ViewModels
 
         private void AddListeners()
         {
-            RegistrationBtn.onClick.AddListener(OnRegistrationClick);
-            m_ServerConnectorUI.AddConnectionListener(this);
+
         }
 
         private void RemoveListeners()
         {
-            RegistrationBtn.onClick.RemoveListener(OnRegistrationClick);
-            m_ServerConnectorUI.RemoveConnectionListener(this);
-        }
 
-        private void OnRegistrationClick()
-        {
-            m_SignService.TryToSignUp(GetSignUpInfo(), OnRegistrationResult);
-        }
-
-        private void OnRegistrationResult(SignUpResult signUpResult)
-        {
-
-        }
-
-        private SignUpInfo GetSignUpInfo()
-        {
-            return new SignUpInfo()
-            {
-                Login = Login,
-                Email = Email,
-                Password = Password
-            };
         }
 
         private string m_Login = string.Empty;

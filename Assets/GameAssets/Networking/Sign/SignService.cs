@@ -1,31 +1,34 @@
 using AdvancedDebugger;
+using AvoidContactCommon.Sign;
+using AvoidContactCommon.Validation;
 using System;
 using Zenject;
 
 namespace Networking.Sign
 {
-    public class SignService : IInitializable
+    public class SignService
     {
         public bool IsLogedIn => !string.IsNullOrEmpty(m_AuthorizationToken);
 
-        [Inject]
         private SignMessageSender m_MessageSender;
-
-        [Inject]
+        private CommonSignValidator m_Validator;
         private IConnectorInfo m_ConnectorInfo;
-
         private Action<SignInResult> m_AuhtorizaitonCallback;
         private Action<SignUpResult> m_RegistrationCallback;
         private string m_AuthorizationToken;
 
+        [Inject]
+        public SignService(IConnectorInfo connectorInfo, SignMessageSender signMessageSender)
+        {
+            m_ConnectorInfo = connectorInfo;
+            m_MessageSender = signMessageSender;
+            m_Validator = new CommonSignValidator();
+            AddListeners();
+        }
+
         ~SignService()
         {
             RemoveListeners();
-        }
-
-        public void Initialize()
-        {
-            AddListeners();           
         }
 
         public void TryToSignIn(string login, string password, Action<SignInResult> onResultCallback = null)
@@ -37,9 +40,18 @@ namespace Networking.Sign
             }
         }
 
-        public void TryToSignUp(SignUpInfo signUpModel, Action<SignUpResult> onResultCallback = null)
+        public void TryToSignUp(SignedPlayerInfo signedPlayerInfo, Action<SignUpResult> onResultCallback = null)
         {
-
+            var result = m_Validator.CheckSignUp(signedPlayerInfo);
+            Debugger.Log(result.ToString(), DebuggerLog.InfoDebug);
+            if (result == SignUpResult.Success)
+            {
+                m_RegistrationCallback = onResultCallback;
+            }
+            else
+            {
+                onResultCallback?.Invoke(result);
+            }
         }
 
         public void SignOut()

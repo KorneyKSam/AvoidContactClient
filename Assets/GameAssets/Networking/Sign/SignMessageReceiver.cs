@@ -1,5 +1,5 @@
+using AvoidContactCommon.Validation;
 using Riptide;
-using UnityEngine;
 using UnityEngine.Events;
 
 namespace Networking.Sign
