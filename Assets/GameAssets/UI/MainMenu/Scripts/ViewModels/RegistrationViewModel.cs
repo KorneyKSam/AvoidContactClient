@@ -1,3 +1,4 @@
+using AdvancedDebugger;
 using AvoidContactCommon.Sign;
 using AvoidContactCommon.Validation;
 using MVVM;
@@ -94,12 +95,18 @@ namespace UI.ViewModels
 
         private void OnRegistrationClick()
         {
+            if (Password != RepeatedPassword)
+            {
+                Debugger.Log($"Registration result: passwords don't match", DebuggerLog.InfoDebug);
+                return;
+            }
+
             m_SignService.TryToSignUp(GetSignUpInfo(), OnRegistrationResult);
         }
 
         private void OnRegistrationResult(SignUpResult signUpResult)
         {
-
+            Debugger.Log($"Registration result: {signUpResult}", DebuggerLog.InfoDebug);
         }
 
         private SignedPlayerInfo GetSignUpInfo()

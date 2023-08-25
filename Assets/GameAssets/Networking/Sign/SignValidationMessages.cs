@@ -12,6 +12,7 @@ namespace Networking
             { SignInResult.Success, "Успешная авторизация!" },
             { SignInResult.WrongLoginOrPassword, "Неверный логин или пароль!" },
             { SignInResult.AccountIsOccupied, "Аккаунт занят другим устройством!" },
+            { SignInResult.NotValidLoginOrPassword, "Невалидный логин или пароль!" },
         };
 
         public static Dictionary<SignUpResult, string> SignUpMessages = new Dictionary<SignUpResult, string>()

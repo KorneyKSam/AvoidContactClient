@@ -96,12 +96,15 @@ namespace UI
                     m_AuthorizationService.TryToSignIn(authorizationData.Login, authorizationData.Password,
                     (result) =>
                     {
-                        if (result != SignInResult.Success || result != SignInResult.AccountIsOccupied)
+                        if (result != SignInResult.Success && result != SignInResult.AccountIsOccupied)
                         {
-                            authorizationData.IsAutomaticAuthorization = false;
-                            m_DataService.Save(authorizationData);
+                            m_DataService.Remove<AuthorizationData>();
                         }
                     });
+                }
+                else
+                {
+                    m_DataService.Remove<AuthorizationData>();
                 }
             }
         }

@@ -112,16 +112,16 @@ namespace UI.DialogBoxes
                 StartCoroutine(InvokeCancel(CancelingDelayAfterSuccessAuthorization));
             }
 
-            if (signInResult == SignInResult.Success || signInResult == SignInResult.AccountIsOccupied && m_AuthorizationViewModel.IsAutomaticAuthorization)
+            if (signInResult == SignInResult.Success && m_AuthorizationViewModel.IsAutomaticAuthorization)
             {
                 UpdateDataByViewModel();
+                m_DataService.Save(m_AuthorizationData);
             }
-            else if (signInResult != SignInResult.Success || signInResult != SignInResult.AccountIsOccupied && m_AuthorizationViewModel.IsAutomaticAuthorization)
+            else
             {
-                m_AuthorizationData.IsAutomaticAuthorization = false;
+                m_DataService.Remove(m_AuthorizationData);
                 m_AuthorizationViewModel.IsAutomaticAuthorization = false;
-            }
-            m_DataService.Save(m_AuthorizationData);
+            }          
         }
 
         private IEnumerator InvokeCancel(float dealy)

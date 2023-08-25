@@ -11,7 +11,7 @@ namespace Networking.Sign
         public bool IsLogedIn => !string.IsNullOrEmpty(m_AuthorizationToken);
 
         private SignMessageSender m_MessageSender;
-        private CommonSignValidator m_Validator;
+        private CommonSignValidator m_CommonValidator;
         private IConnectorInfo m_ConnectorInfo;
         private Action<SignInResult> m_AuhtorizaitonCallback;
         private Action<SignUpResult> m_RegistrationCallback;
@@ -22,7 +22,7 @@ namespace Networking.Sign
         {
             m_ConnectorInfo = connectorInfo;
             m_MessageSender = signMessageSender;
-            m_Validator = new CommonSignValidator();
+            m_CommonValidator = new CommonSignValidator();
             AddListeners();
         }
 
@@ -35,22 +35,33 @@ namespace Networking.Sign
         {
             if (m_ConnectorInfo.IsConnected && !IsLogedIn)
             {
-                m_AuhtorizaitonCallback = onResultCallback;
-                m_MessageSender.SignIn(login, password);
+                var result = m_CommonValidator.CheckSignIn(login, password);
+                if (result == SignInResult.Success)
+                {
+                    m_AuhtorizaitonCallback = onResultCallback;
+                    m_MessageSender.SignIn(login, password);
+                }
+                else
+                {
+                    onResultCallback?.Invoke(result);
+                }
             }
         }
 
         public void TryToSignUp(SignedPlayerInfo signedPlayerInfo, Action<SignUpResult> onResultCallback = null)
         {
-            var result = m_Validator.CheckSignUp(signedPlayerInfo);
-            Debugger.Log(result.ToString(), DebuggerLog.InfoDebug);
-            if (result == SignUpResult.Success)
+            if (m_ConnectorInfo.IsConnected && !IsLogedIn)
             {
-                m_RegistrationCallback = onResultCallback;
-            }
-            else
-            {
-                onResultCallback?.Invoke(result);
+                var result = m_CommonValidator.CheckSignUp(signedPlayerInfo);
+                if (result == SignUpResult.Success)
+                {
+                    m_RegistrationCallback = onResultCallback;
+                    m_MessageSender.SignUp(signedPlayerInfo);
+                }
+                else
+                {
+                    onResultCallback?.Invoke(result);
+                }
             }
         }
 

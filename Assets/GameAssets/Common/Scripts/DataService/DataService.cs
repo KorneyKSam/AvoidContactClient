@@ -53,7 +53,7 @@ namespace Common
             return data;
         }
 
-        public void Remove<T>() where T : new()
+        public void Remove<T>(T file = default) where T : new()
         {
             var filePath = BuildPath<T>();
             if (File.Exists(filePath))
