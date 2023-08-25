@@ -1,13 +1,13 @@
 using AvoidContactCommon.Validation;
 using Common;
 using DialogBoxService;
+using MVVM.ViewModels;
 using MyNamespace;
 using Networking;
 using Networking.Sign;
 using Networking.Sign.Data;
 using System;
 using System.Collections;
-using UI.ViewModels;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityWeld.Binding;

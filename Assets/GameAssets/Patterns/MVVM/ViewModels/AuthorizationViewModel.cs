@@ -1,9 +1,8 @@
-using MVVM;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityWeld.Binding;
 
-namespace UI.ViewModels
+namespace MVVM.ViewModels
 {
     [Binding]
     public class AuthorizationViewModel : BaseMonoPropertyChanged, INetworkConnectionViewModel

@@ -1,6 +1,6 @@
+using MVVM.ViewModels;
 using Networking;
 using System.Collections.Generic;
-using UI.ViewModels;
 using Zenject;
 
 namespace MyNamespace

@@ -6,40 +6,26 @@ using UnityEngine.UI;
 using UnityWeld.Binding;
 using Zenject;
 
-namespace UI.ViewModels
+namespace MVVM.ViewModels
 {
     [Binding]
     public class PlayerInfoViewModel : BaseMonoPropertyChanged, INetworkConnectionViewModel
     {
-        public Button RegistrationBtn => m_RegistrationBtn;
-        public Button CancelRegistration => m_CancelRegistration;
+        public Button UpdateBtn => m_UpdateButton;
+        public Button CancelUpdateBtn => m_CancelUpdateButton;
 
         [Binding]
-        public string Login
+        public string CallSign
         {
-            get => m_Login;
-            set => Set(ref m_Login, value);
+            get => m_CallSign;
+            set => Set(ref m_CallSign, value);
         }
 
         [Binding]
-        public string Email
+        public string Description
         {
-            get => m_Email;
-            set => Set(ref m_Email, value);
-        }
-
-        [Binding]
-        public string Password
-        {
-            get => m_Password;
-            set => Set(ref m_Password, value);
-        }
-
-        [Binding]
-        public string RepeatedPassword
-        {
-            get => m_RepeatedPassword;
-            set => Set(ref m_RepeatedPassword, value);
+            get => m_Description;
+            set => Set(ref m_Description, value);
         }
 
         [Binding]
@@ -57,10 +43,10 @@ namespace UI.ViewModels
         }
 
         [SerializeField]
-        private Button m_RegistrationBtn;
+        private Button m_UpdateButton;
 
         [SerializeField]
-        private Button m_CancelRegistration;
+        private Button m_CancelUpdateButton;
 
         [Inject]
         private ServerConnectorUI m_ServerConnectorUI;
@@ -70,16 +56,16 @@ namespace UI.ViewModels
 
         private void AddListeners()
         {
-
+            m_ServerConnectorUI.AddConnectionListener(this);
         }
 
         private void RemoveListeners()
         {
-
+            m_ServerConnectorUI.RemoveConnectionListener(this);
         }
 
-        private string m_Login = string.Empty;
-        private string m_Email = string.Empty;
+        private string m_CallSign = string.Empty;
+        private string m_Description = string.Empty;
         private string m_Password = string.Empty;
         private string m_RepeatedPassword = string.Empty;
         private string m_TooltipMessage;

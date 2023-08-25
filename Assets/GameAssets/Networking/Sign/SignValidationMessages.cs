@@ -1,32 +1,35 @@
-using AvoidContactCommon.Validation;
+п»їusing AvoidContactCommon.Validation;
 using System.Collections.Generic;
 
 namespace Networking
 {
     public static class SignValidationMessages
     {
-        public const string NoConnection = "Не удалось подключиться к серверу!";
+        public const string NoConnection = "РќРµ СѓРґР°Р»РѕСЃСЊ РїРѕРґРєР»СЋС‡РёС‚СЊСЃСЏ Рє СЃРµСЂРІРµСЂСѓ!";
+        public const string Info = "РќР°Р¶РјРёС‚Рµ РЅР° в“ С‡С‚РѕР±С‹ СѓР·РЅР°С‚СЊ РїРѕРґСЂРѕР±РЅРѕСЃС‚Рё!";
 
-        public static Dictionary<SignInResult, string> SignInMessages = new Dictionary<SignInResult, string>()
+        public static Dictionary<SignInResult, string> SignInMessages = new()
         {
-            { SignInResult.Success, "Успешная авторизация!" },
-            { SignInResult.WrongLoginOrPassword, "Неверный логин или пароль!" },
-            { SignInResult.AccountIsOccupied, "Аккаунт занят другим устройством!" },
-            { SignInResult.NotValidLoginOrPassword, "Невалидный логин или пароль!" },
+            { SignInResult.Success, "РЈСЃРїРµС€РЅР°СЏ Р°РІС‚РѕСЂРёР·Р°С†РёСЏ!" },
+            { SignInResult.WrongLoginOrPassword, "РќРµРІРµСЂРЅС‹Р№ Р»РѕРіРёРЅ РёР»Рё РїР°СЂРѕР»СЊ!" },
+            { SignInResult.AccountIsOccupied, "РђРєРєР°СѓРЅС‚ Р·Р°РЅСЏС‚ РґСЂСѓРіРёРј СѓСЃС‚СЂРѕР№СЃС‚РІРѕРј!" },
+            { SignInResult.NotValidLoginOrPassword, $"РќРµРІР°Р»РёРґРЅС‹Р№ Р»РѕРіРёРЅ РёР»Рё РїР°СЂРѕР»СЊ! {Info}" },
         };
 
-        public static Dictionary<SignUpResult, string> SignUpMessages = new Dictionary<SignUpResult, string>()
+        public static Dictionary<SignUpResult, string> SignUpMessages = new()
         {
-            { SignUpResult.Success, "Успешная регистрация!" },
-            { SignUpResult.LoginUsed, "Логин уже используется другим игроком!" },
-            { SignUpResult.EmailUsed, "Почта уже используется!" },
-            { SignUpResult.NotValidLogin, "Логин не прошёл проверку!" },
-            { SignUpResult.NotValidPassword, "Пароль не прошёл проверку!" },
-            { SignUpResult.NotValidEmail, "Почта не прошла проверку!" },
-            { SignUpResult.NotValidLoginAndPassword, "Логин и пароль не прошли проверку!" },
-            { SignUpResult.NotValidLoginAndEmail, "Логин и почта не прошли проверку!" },
-            { SignUpResult.NotValidEmailAndPassword, "Почта и пароль не прошли проверку!" },
-            { SignUpResult.NotValidLoginAndPasswordAndEmail, "Почта, логин и пароль не прошли проверку!" },
+            { SignUpResult.Success, "РЈСЃРїРµС€РЅР°СЏ СЂРµРіРёСЃС‚СЂР°С†РёСЏ!" },
+            { SignUpResult.LoginUsed, "Р›РѕРіРёРЅ СѓР¶Рµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РґСЂСѓРіРёРј РёРіСЂРѕРєРѕРј!" },
+            { SignUpResult.EmailUsed, "РџРѕС‡С‚Р° СѓР¶Рµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ!" },
+            { SignUpResult.NotValidLogin, $"Р›РѕРіРёРЅ РЅРµ РїСЂРѕС€С‘Р» РїСЂРѕРІРµСЂРєСѓ! {Info}" },
+            { SignUpResult.NotValidPassword, $"РџР°СЂРѕР»СЊ РЅРµ РїСЂРѕС€С‘Р» РїСЂРѕРІРµСЂРєСѓ! {Info}" },
+            { SignUpResult.NotValidEmail, $"РџРѕС‡С‚Р° РЅРµ РїСЂРѕС€Р»Р° РїСЂРѕРІРµСЂРєСѓ! {Info}" },
+            { SignUpResult.NotValidLoginAndPassword, $"Р›РѕРіРёРЅ Рё РїР°СЂРѕР»СЊ РЅРµ РїСЂРѕС€Р»Рё РїСЂРѕРІРµСЂРєСѓ! {Info}" },
+            { SignUpResult.NotValidLoginAndEmail, $"Р›РѕРіРёРЅ Рё РїРѕС‡С‚Р° РЅРµ РїСЂРѕС€Р»Рё РїСЂРѕРІРµСЂРєСѓ! {Info}" },
+            { SignUpResult.NotValidEmailAndPassword, $"РџРѕС‡С‚Р° Рё РїР°СЂРѕР»СЊ РЅРµ РїСЂРѕС€Р»Рё РїСЂРѕРІРµСЂРєСѓ! {Info}" },
+            { SignUpResult.NotValidLoginAndPasswordAndEmail, $"РџРѕС‡С‚Р°, Р»РѕРіРёРЅ Рё РїР°СЂРѕР»СЊ РЅРµ РїСЂРѕС€Р»Рё РїСЂРѕРІРµСЂРєСѓ! {Info}" },
+            { SignUpResult.NotValidCallSign, $"РџРѕР·С‹РІРЅРѕР№ РЅРµ РїСЂРѕС€С‘Р» РїСЂРѕРІРµСЂРєСѓ! {Info}" },
+            { SignUpResult.NotValidDescription, "РћРїРёСЃР°РЅРёРµ РїСЂРµРІС‹С€Р°РµС‚ Р»РёРјРёС‚ РІ 495 СЃРёРјРІРѕР»РѕРІ, РёРЅС‚РµСЂС„РµР№СЃ РЅРµ СЂРµР·РёРЅРѕРІС‹Р№! Р’С‹ СЂРµС€РёР»Рё СЃРІРѕР№ СЂРѕРјР°РЅ В«Р’РѕР№РЅР° Рё РњРёСЂВ» РЅР°РїРёСЃР°С‚СЊ?" },
         };
     }
 }

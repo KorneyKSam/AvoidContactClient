@@ -709,7 +709,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewAdapterTypeName: 
   viewAdapterOptions: {fileID: 0}
-  viewModelPropertyName: UI.ViewModels.AuthorizationViewModel.TooltipMessage
+  viewModelPropertyName: MVVM.ViewModels.AuthorizationViewModel.TooltipMessage
   viewPropertyName: TMPro.TextMeshProUGUI.text
 --- !u!1 &8030940807081975153
 GameObject:
@@ -1077,7 +1077,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewAdapterTypeName: 
   viewAdapterOptions: {fileID: 0}
-  viewModelPropertyName: UI.ViewModels.AuthorizationViewModel.IsConnected
+  viewModelPropertyName: MVVM.ViewModels.AuthorizationViewModel.IsConnected
   viewPropertyName: UnityWeld.GOActivator.IsActive
 --- !u!224 &1360739643076580741 stripped
 RectTransform:
@@ -1223,7 +1223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewAdapterTypeName: 
   viewAdapterOptions: {fileID: 0}
-  viewModelPropertyName: UI.ViewModels.AuthorizationViewModel.IsConnected
+  viewModelPropertyName: MVVM.ViewModels.AuthorizationViewModel.IsConnected
   viewPropertyName: UnityEngine.UI.Button.interactable
 --- !u!224 &2299385108405705398 stripped
 RectTransform:
@@ -1368,7 +1368,7 @@ MonoBehaviour:
   m_Script: {fileID: -1957390036, guid: 346623add6b93314fbf2b828a804b140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewModelPropertyName: UI.ViewModels.AuthorizationViewModel.Login
+  viewModelPropertyName: MVVM.ViewModels.AuthorizationViewModel.Login
   viewEventName: TMPro.TMP_InputField.onValueChanged
   viewPropertyName: TMPro.TMP_InputField.text
   viewAdapterTypeName: 
@@ -1517,7 +1517,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewAdapterTypeName: 
   viewAdapterOptions: {fileID: 0}
-  viewModelPropertyName: UI.ViewModels.AuthorizationViewModel.IsConnected
+  viewModelPropertyName: MVVM.ViewModels.AuthorizationViewModel.IsConnected
   viewPropertyName: UnityEngine.UI.Button.interactable
 --- !u!224 &954695689861840161 stripped
 RectTransform:
@@ -1667,7 +1667,7 @@ MonoBehaviour:
   m_Script: {fileID: -1957390036, guid: 346623add6b93314fbf2b828a804b140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewModelPropertyName: UI.ViewModels.AuthorizationViewModel.Password
+  viewModelPropertyName: MVVM.ViewModels.AuthorizationViewModel.Password
   viewEventName: TMPro.TMP_InputField.onValueChanged
   viewPropertyName: TMPro.TMP_InputField.text
   viewAdapterTypeName: 
@@ -1933,7 +1933,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewAdapterTypeName: 
   viewAdapterOptions: {fileID: 0}
-  viewModelPropertyName: UI.ViewModels.AuthorizationViewModel.IsAuthorizeButtonInteractable
+  viewModelPropertyName: MVVM.ViewModels.AuthorizationViewModel.IsAuthorizeButtonInteractable
   viewPropertyName: UnityEngine.UI.Button.interactable
 --- !u!114 &2670189136056174814 stripped
 MonoBehaviour:
@@ -2184,7 +2184,7 @@ MonoBehaviour:
   m_Script: {fileID: -1957390036, guid: 346623add6b93314fbf2b828a804b140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewModelPropertyName: UI.ViewModels.AuthorizationViewModel.IsAutomaticAuthorization
+  viewModelPropertyName: MVVM.ViewModels.AuthorizationViewModel.IsAutomaticAuthorization
   viewEventName: UnityEngine.UI.Toggle.onValueChanged
   viewPropertyName: UnityEngine.UI.Toggle.isOn
   viewAdapterTypeName: 

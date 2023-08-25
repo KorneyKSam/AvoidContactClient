@@ -2642,6 +2642,8 @@ GameObject:
   - component: {fileID: 7797902827556473367}
   - component: {fileID: 7797902827556473366}
   - component: {fileID: 1388110326326781824}
+  - component: {fileID: 6173357711959019843}
+  - component: {fileID: 4384567529061156338}
   m_Layer: 5
   m_Name: RegistrationSheet
   m_TagString: Untagged
@@ -2746,6 +2748,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_RegistrationBtn: {fileID: 7797902827138907742}
   m_CancelRegistration: {fileID: 97593323597601182}
+--- !u!114 &6173357711959019843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7797902827556473364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bd6325be548e3840869893be268a3da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ActivatedElements:
+  - GameObject: {fileID: 2454645049653605304}
+    IsInversed: 0
+  - GameObject: {fileID: 5555412293481908044}
+    IsInversed: 1
+--- !u!114 &4384567529061156338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7797902827556473364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1670825535, guid: 346623add6b93314fbf2b828a804b140, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewAdapterTypeName: 
+  viewAdapterOptions: {fileID: 0}
+  viewModelPropertyName: MVVM.ViewModels.RegistrationViewModel.IsConnected
+  viewPropertyName: UnityWeld.GOActivator.IsActive
 --- !u!1001 &97593323998706109
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3256,7 +3291,7 @@ MonoBehaviour:
   m_Script: {fileID: -1957390036, guid: 346623add6b93314fbf2b828a804b140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewModelPropertyName: UI.ViewModels.RegistrationViewModel.Login
+  viewModelPropertyName: MVVM.ViewModels.RegistrationViewModel.Login
   viewEventName: TMPro.TMP_InputField.onValueChanged
   viewPropertyName: TMPro.TMP_InputField.text
   viewAdapterTypeName: 
@@ -3561,7 +3596,7 @@ MonoBehaviour:
   m_Script: {fileID: -1957390036, guid: 346623add6b93314fbf2b828a804b140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewModelPropertyName: UI.ViewModels.RegistrationViewModel.Email
+  viewModelPropertyName: MVVM.ViewModels.RegistrationViewModel.Email
   viewEventName: TMPro.TMP_InputField.onValueChanged
   viewPropertyName: TMPro.TMP_InputField.text
   viewAdapterTypeName: 
@@ -3753,7 +3788,7 @@ MonoBehaviour:
   m_Script: {fileID: -1957390036, guid: 346623add6b93314fbf2b828a804b140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewModelPropertyName: UI.ViewModels.RegistrationViewModel.Password
+  viewModelPropertyName: MVVM.ViewModels.RegistrationViewModel.Password
   viewEventName: TMPro.TMP_InputField.onValueChanged
   viewPropertyName: TMPro.TMP_InputField.text
   viewAdapterTypeName: 
@@ -3945,7 +3980,7 @@ MonoBehaviour:
   m_Script: {fileID: -1957390036, guid: 346623add6b93314fbf2b828a804b140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewModelPropertyName: UI.ViewModels.RegistrationViewModel.RepeatedPassword
+  viewModelPropertyName: MVVM.ViewModels.RegistrationViewModel.RepeatedPassword
   viewEventName: TMPro.TMP_InputField.onValueChanged
   viewPropertyName: TMPro.TMP_InputField.text
   viewAdapterTypeName: 

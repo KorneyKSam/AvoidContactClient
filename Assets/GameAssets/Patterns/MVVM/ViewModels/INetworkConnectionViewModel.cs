@@ -1,4 +1,4 @@
-namespace UI.ViewModels
+namespace MVVM.ViewModels
 {
     public interface INetworkConnectionViewModel
     {

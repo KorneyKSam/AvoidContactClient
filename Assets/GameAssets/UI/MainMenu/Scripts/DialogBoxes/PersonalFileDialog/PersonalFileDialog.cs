@@ -1,8 +1,8 @@
 using DG.Tweening;
 using DialogBoxService;
+using MVVM.ViewModels;
 using System;
 using System.Collections.Generic;
-using UI.ViewModels;
 using UnityEngine;
 
 namespace UI.DialogBoxes

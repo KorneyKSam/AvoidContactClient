@@ -5639,6 +5639,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7721254847874813186}
     m_Modifications:
+    - target: {fileID: 173253480, guid: 97e716d77b6d2a64c8626ebd3b0a028b, type: 3}
+      propertyPath: m_fontSize
+      value: 32.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 354314680, guid: 97e716d77b6d2a64c8626ebd3b0a028b, type: 3}
+      propertyPath: m_fontSize
+      value: 32.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 445526094703248828, guid: 97e716d77b6d2a64c8626ebd3b0a028b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5631489532517378885, guid: 97e716d77b6d2a64c8626ebd3b0a028b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5631489533069831119, guid: 97e716d77b6d2a64c8626ebd3b0a028b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5631489533419138906, guid: 97e716d77b6d2a64c8626ebd3b0a028b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5731,6 +5751,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8627923317874995218, guid: 97e716d77b6d2a64c8626ebd3b0a028b, type: 3}
+      propertyPath: m_ActivatedElements.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8627923317874995218, guid: 97e716d77b6d2a64c8626ebd3b0a028b, type: 3}
+      propertyPath: m_ActivatedElements.Array.data[2].GameObject
+      value: 
+      objectReference: {fileID: 8493031198258579448}
+    - target: {fileID: 8627923317874995218, guid: 97e716d77b6d2a64c8626ebd3b0a028b, type: 3}
+      propertyPath: m_ActivatedElements.Array.data[2].IsInversed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9169528902311446673, guid: 97e716d77b6d2a64c8626ebd3b0a028b, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -3.1999998
@@ -5745,5 +5777,10 @@ RectTransform:
 --- !u!1 &4455340532376284447 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5631489533419138907, guid: 97e716d77b6d2a64c8626ebd3b0a028b, type: 3}
+  m_PrefabInstance: {fileID: 8355194902798598724}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8493031198258579448 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 445526094703248828, guid: 97e716d77b6d2a64c8626ebd3b0a028b, type: 3}
   m_PrefabInstance: {fileID: 8355194902798598724}
   m_PrefabAsset: {fileID: 0}

@@ -15,6 +15,7 @@ namespace Networking.Sign
         private IConnectorInfo m_ConnectorInfo;
         private Action<SignInResult> m_AuhtorizaitonCallback;
         private Action<SignUpResult> m_RegistrationCallback;
+        private Action<bool> m_CommonInfoUpdateCallback;
         private string m_AuthorizationToken;
 
         [Inject]
@@ -48,7 +49,7 @@ namespace Networking.Sign
             }
         }
 
-        public void TryToSignUp(SignedPlayerInfo signedPlayerInfo, Action<SignUpResult> onResultCallback = null)
+        public void TryToSignUp(SignInfo signedPlayerInfo, Action<SignUpResult> onResultCallback = null)
         {
             if (m_ConnectorInfo.IsConnected && !IsLogedIn)
             {
@@ -61,6 +62,22 @@ namespace Networking.Sign
                 else
                 {
                     onResultCallback?.Invoke(result);
+                }
+            }
+        }
+
+        public void UpdateCommonInfo(PlayerInfo commonPlayerInfo, Action<bool> onResultCallback = null)
+        {
+            if (m_ConnectorInfo.IsConnected && IsLogedIn)
+            {
+                if (m_CommonValidator.CheckCommonInfo(commonPlayerInfo))
+                {
+                    m_CommonInfoUpdateCallback = onResultCallback;
+                    m_MessageSender.UpdateCommonInfo(commonPlayerInfo);
+                }
+                else
+                {
+                    onResultCallback?.Invoke(false);
                 }
             }
         }
@@ -116,6 +133,12 @@ namespace Networking.Sign
         {
             m_RegistrationCallback?.Invoke(result);
             m_RegistrationCallback = null;
+        }
+
+        private void OnCommonInfoChange(bool isChanged)
+        {
+            m_CommonInfoUpdateCallback?.Invoke(isChanged);
+            m_CommonInfoUpdateCallback = null;
         }
 
         private void OnConnectionChanged(bool isConnected)

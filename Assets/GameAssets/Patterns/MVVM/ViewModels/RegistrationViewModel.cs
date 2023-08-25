@@ -1,7 +1,6 @@
 using AdvancedDebugger;
 using AvoidContactCommon.Sign;
 using AvoidContactCommon.Validation;
-using MVVM;
 using MyNamespace;
 using Networking.Sign;
 using UnityEngine;
@@ -9,7 +8,7 @@ using UnityEngine.UI;
 using UnityWeld.Binding;
 using Zenject;
 
-namespace UI.ViewModels
+namespace MVVM.ViewModels
 {
     [Binding]
     public class RegistrationViewModel : BaseMonoPropertyChanged, INetworkConnectionViewModel
@@ -109,9 +108,9 @@ namespace UI.ViewModels
             Debugger.Log($"Registration result: {signUpResult}", DebuggerLog.InfoDebug);
         }
 
-        private SignedPlayerInfo GetSignUpInfo()
+        private SignInfo GetSignUpInfo()
         {
-            return new SignedPlayerInfo()
+            return new SignInfo()
             {
                 Login = Login,
                 Email = Email,
