@@ -12,7 +12,7 @@ namespace Common.Animation
         [SerializeField]
         private Animator m_Animator;
 
-        public void PlayAnimation(string animationName)
+        public void Play(string animationName)
         {
             m_Animator.Play(animationName);
         }

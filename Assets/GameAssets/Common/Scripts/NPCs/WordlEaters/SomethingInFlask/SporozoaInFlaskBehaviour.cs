@@ -65,12 +65,12 @@ namespace NPCs.Sporozoa
 
         private void SwitchToRandomAnimation()
         {
-            m_AnimatedSporozoaInFlask.PlayAnimation(GetRandomAnimationName(m_CurrentState));
+            m_AnimatedSporozoaInFlask.Play(GetRandomAnimationName(m_CurrentState));
         }
 
         public void StopBehaviour()
         {
-            m_AnimatedSporozoaInFlask.PlayAnimation(m_States[SporozoaInFlaskState.Calm].First());
+            m_AnimatedSporozoaInFlask.Play(m_States[SporozoaInFlaskState.Calm].First());
         }
 
         private void RemoveAnimationListener()
